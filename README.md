@@ -106,3 +106,14 @@ Think of an _array_ as **collection**
   file tương ứng ở thư mục `theme`
 
 - **the_loop**: Famous loop in WordPress
+
+### 4.2. Header & Footer
+
+- `header.php`: Header
+- `footer.php`: Footer
+- `functions.php`: Định nghĩa các hàm để load CSS/JS,...
+
+Gọi hàm `wp_head()` ở file `header.php` để `php` tự động load các file `css` cần thiết.
+
+Gọi hàm `wp_footer()` ở file `footer.php` để `php` tự động load các file `js` cần thiết
+và load thanh điều hướng ở trên cùng của website.

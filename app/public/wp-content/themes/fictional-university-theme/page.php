@@ -1,3 +1,6 @@
+
+<?php get_header(); ?>
+
 <h1>This is a page, not a post</h1>
 
 <?php
@@ -12,3 +15,5 @@
     }
 
 ?>
+
+<?php get_footer(); ?>

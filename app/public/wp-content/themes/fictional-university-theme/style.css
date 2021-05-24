@@ -1,5 +1,9 @@
 /*
-    Theme Name: Fictional University
-    Author: Nguyen Trong Hieu
-    Version: 1.0
+  Theme Name: Fictional University
+  Author: Nguyen Trong Hieu
+  Version: 1.0
 */
+
+body {
+  background-color: teal;
+}
