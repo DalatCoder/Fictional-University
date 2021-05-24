@@ -117,3 +117,10 @@ Gọi hàm `wp_head()` ở file `header.php` để `php` tự động load các 
 
 Gọi hàm `wp_footer()` ở file `footer.php` để `php` tự động load các file `js` cần thiết
 và load thanh điều hướng ở trên cùng của website.
+
+### 4.3. Convert Static HTML Template into WordPress
+
+- Đưa các file vào folder chứa template
+- Chuyển `header` và `footer` vào các file tương ứng, sau đó là nội dung
+- Dùng hàm `get_theme_file_uri` để lấy đường dẫn tới thư mục chứa `template`
+  sau đó truyền tên các file tương ứng vào để liên kết vào HTML.
