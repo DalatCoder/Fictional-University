@@ -48,3 +48,24 @@ greeting('Hieu');
 
 var_dump(bloginfo());
 ```
+
+### 3.3. PHP Array
+
+Think of an _array_ as **collection**
+
+```php
+  $names = array('Hieu', 'Ha');
+
+  echo $names[0]; // Hieu
+  echo $names[1]; // Ha
+
+  echo count($names); // 2
+```
+
+### 3.4. PHP Loop
+
+```php
+  for ($names as $name) {
+    echo $name;
+  }
+```
