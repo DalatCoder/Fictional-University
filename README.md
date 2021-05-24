@@ -17,7 +17,9 @@ Khoá học: Become a Wordpress Developer
 
 - PHP: The language that Wordpress is written in.
 
-## 3. Create a new theme
+## 3. First Coding Steps PHP
+
+### 3.1. Create a new theme
 
 Cần phải tạo 1 tối thiểu 2 file:
 
@@ -31,4 +33,18 @@ Cần phải tạo 1 tối thiểu 2 file:
   Author: Nguyen Trong Hieu
   Version: 1.0
 */
+```
+
+- `screenshot.png`: Ảnh đại diện của theme
+
+### 3.2. PHP Function
+
+```php
+function greeting($name) {
+  echo "Hello $name";
+}
+
+greeting('Hieu');
+
+var_dump(bloginfo());
 ```
