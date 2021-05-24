@@ -30,3 +30,5 @@ Stack trace:
   thrown in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\index.php on line 6
 [24-May-2021 11:33:27 UTC] PHP Parse error:  syntax error, unexpected '}' in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 19
 [24-May-2021 11:33:27 UTC] PHP Parse error:  syntax error, unexpected '}' in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 19
+[24-May-2021 14:00:53 UTC] PHP Parse error:  syntax error, unexpected '-', expecting '(' in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 25
+[24-May-2021 14:00:53 UTC] PHP Parse error:  syntax error, unexpected '-', expecting '(' in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 25

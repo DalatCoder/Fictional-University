@@ -124,3 +124,10 @@ và load thanh điều hướng ở trên cùng của website.
 - Chuyển `header` và `footer` vào các file tương ứng, sau đó là nội dung
 - Dùng hàm `get_theme_file_uri` để lấy đường dẫn tới thư mục chứa `template`
   sau đó truyền tên các file tương ứng vào để liên kết vào HTML.
+
+### 5. Pages
+
+#### 5.1. Interior Page Template
+
+- `site_url()`: Trả về đường dẫn root của trang web
+- `after_theme_setup` hooks: Dùng để setup `<title>`

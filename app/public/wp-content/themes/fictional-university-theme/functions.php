@@ -22,4 +22,12 @@ function university_files() {
     wp_enqueue_script('university_main_js', get_theme_file_uri('/js/scripts-bundled.js'), NULL, '1.0', true);
 }
 
+function university_features() {
+    
+    // Add <title> to head tag
+    add_theme_support('title-tag');
+}
+
 add_action('wp_enqueue_scripts', 'university_files');
+
+add_action('after_setup_theme', 'university_features');
