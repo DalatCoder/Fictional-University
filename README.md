@@ -69,3 +69,40 @@ Think of an _array_ as **collection**
     echo $name;
   }
 ```
+
+## 4. WordPress Specific PHP
+
+### 4.1. The Famous WordPress Loop
+
+```php
+// index.php: Hiển thị toàn bộ post trong cơ sở dữ liệu
+
+<?php
+    while (have_posts()) {
+        the_post();
+        ?>
+            <h2>
+                <a href="<?php the_permalink(); ?>">
+                    <?php the_title(); ?>
+                </a>
+            </h2>
+
+            <?php the_content(); ?>
+
+            <hr>
+        <?php
+    }
+?>
+
+// single.php: Trang được hiển thị khi click vào 1 post để xem chi tiết
+// single.php: Chỉ được dùng để hiển thị single post
+```
+
+- `index.php`: Trang hiển thị toàn bộ post
+- `single.php`: Trang được hiển thị khi bấm vào chi tiết 1 post
+- `page.php`: Trang được hiển thị cho 1 page
+
+- _note_: Dựa vào đường dẫn URL từ trang mà bạn vào, wordpress sẽ load các
+  file tương ứng ở thư mục `theme`
+
+- **the_loop**: Famous loop in WordPress
