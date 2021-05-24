@@ -5,3 +5,28 @@ Stack trace:
 #2 C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\index.php(17): require('C:\\Users\\HieuDa...')
 #3 {main}
   thrown in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\index.php on line 7
+[24-May-2021 11:18:30 UTC] PHP Parse error:  syntax error, unexpected 'wp_enqueue_style' (T_STRING) in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 9
+[24-May-2021 11:18:30 UTC] PHP Parse error:  syntax error, unexpected 'wp_enqueue_style' (T_STRING) in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 9
+[24-May-2021 11:28:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_theme_file_url() in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\index.php:6
+Stack trace:
+#0 C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\template-loader.php(106): include()
+#1 C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-blog-header.php(19): require_once('C:\\Users\\HieuDa...')
+#2 C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\index.php(17): require('C:\\Users\\HieuDa...')
+#3 {main}
+  thrown in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\index.php on line 6
+[24-May-2021 11:29:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_theme_file_url() in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\index.php:6
+Stack trace:
+#0 C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\template-loader.php(106): include()
+#1 C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-blog-header.php(19): require_once('C:\\Users\\HieuDa...')
+#2 C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\index.php(17): require('C:\\Users\\HieuDa...')
+#3 {main}
+  thrown in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\index.php on line 6
+[24-May-2021 11:29:16 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function get_theme_file_url() in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\index.php:6
+Stack trace:
+#0 C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\template-loader.php(106): include()
+#1 C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-blog-header.php(19): require_once('C:\\Users\\HieuDa...')
+#2 C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\index.php(17): require('C:\\Users\\HieuDa...')
+#3 {main}
+  thrown in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\index.php on line 6
+[24-May-2021 11:33:27 UTC] PHP Parse error:  syntax error, unexpected '}' in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 19
+[24-May-2021 11:33:27 UTC] PHP Parse error:  syntax error, unexpected '}' in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 19
