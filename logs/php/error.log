@@ -33,3 +33,5 @@ Stack trace:
 [24-May-2021 14:00:53 UTC] PHP Parse error:  syntax error, unexpected '-', expecting '(' in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 25
 [24-May-2021 14:00:53 UTC] PHP Parse error:  syntax error, unexpected '-', expecting '(' in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 25
 [25-May-2021 14:08:33 UTC] PHP Parse error:  syntax error, unexpected ')' in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\page.php on line 24
+[25-May-2021 14:53:04 UTC] PHP Parse error:  syntax error, unexpected 'if' (T_IF) in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\page.php on line 46
+[25-May-2021 14:53:22 UTC] PHP Parse error:  syntax error, unexpected '=>' (T_DOUBLE_ARROW) in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\page.php on line 47

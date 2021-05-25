@@ -35,15 +35,33 @@
                 </div>
             <?php endif; ?>
 
-                <!--
+            <?php $current_children_pages = get_pages([
+                'child_of' => get_the_ID()
+            ]); ?>
+            <?php if($post_parent_id != 0 or count($current_children_pages) > 0): ?>
                 <div class="page-links">
-                    <h2 class="page-links__title"><a href="#">About Us</a></h2>
+                    <h2 class="page-links__title">
+                        <a href="<?php echo get_permalink($post_parent_id); ?>">
+                            <?php echo get_the_title($post_parent_id); ?>
+                        </a>
+                    </h2>
                     <ul class="min-list">
-                        <li class="current_page_item"><a href="#">Our History</a></li>
-                        <li><a href="#">Our Goals</a></li>
+                        <?php
+                            $args = [
+                                'title_li' => NULL,
+                                'sort_column' => 'menu_order'
+                            ];
+
+                            if ($post_parent_id != 0)
+                                $args['child_of'] = $post_parent_id;
+                            else 
+                                $args['child_of'] = get_the_ID();
+
+                            wp_list_pages($args);
+                        ?>
                     </ul>
                 </div>
-                -->
+            <?php endif; ?>
 
                 <div class="generic-content">
                     <?php the_content(); ?>

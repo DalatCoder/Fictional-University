@@ -140,3 +140,37 @@ và load thanh điều hướng ở trên cùng của website.
 - `the_title()`: Trả về tiêu đề của trang hiện tại
 - `get_the_title($id)`: Trả về tiêu đề của trang tương ứng với `$id`
 - `get_permalink(wp_get_post_parent_id(get_the_ID()))`: Trả về đường dẫn `uri` tới trang `parent`
+
+### 5.3. Echo or not to Echo
+
+- Có 1 số hàm trong WordPress không cần `echo`, một số hàm khác cần phải `echo`.
+- Các hàm bắt đầu với `get_*` chỉ `return` về giá trị, vì vậy cần `echo` để hiển thị lên màn hình.
+  - `get_the_title($id)`
+  - `get_the_id($post_id)`
+- Các hàm bắt đầu với `the_*`, WordPress đã `echo` giá trị lên màn hình.
+
+  - `the_title()`: Tiêu đề của post hiện tại
+  - `the_ID()`: `ID` của post hiện tại
+
+- **Tham khảo**:
+  - `https://codex.wordpress.org`
+  - `https://developer.wordpress.org`
+
+### 5.4. Menu of child page links
+
+Hiển thị danh sách `menu` với các item cha và con:
+
+- `wp_list_pages($assoc_array)`: Truyền vào 1 `associative array` để cusom danh sách menu
+  - `title_li => NULL`: Không hiển thị tiêu đề của menu
+  - `sort_column => menu_order`: Hiển thị menu con theo thứ tự ở trang `admin`
+  - `child_of => $parent_id`: Chỉ hiển thị các menu của `$parent_id`
+
+Kiểm tra nếu 1 page không có các menu con:
+
+```php
+$current_children_pages = get_pages([
+  'child_of' => get_the_ID() ]
+);
+
+if (count($current_children_pages) == 0) { ... }
+```
