@@ -23,9 +23,15 @@ function university_files() {
 }
 
 function university_features() {
-    
     // Add <title> to head tag
     add_theme_support('title-tag');
+
+    // Add dynamic navigation menu support
+    // args1: any name, use for calling function: wp_nav_menu
+    // args2: name that show on WordPress admin
+    register_nav_menu('headerMenuLocation', 'Header Menu Location');
+    register_nav_menu('footerLocation1', 'Footer Location 1');
+    register_nav_menu('footerLocation2', 'Footer Location 2');
 }
 
 add_action('wp_enqueue_scripts', 'university_files');

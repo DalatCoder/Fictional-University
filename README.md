@@ -202,3 +202,32 @@ Thêm 1 số `class` mô tả chi tiết về trang hiện tại ở thẻ `body
   >
 </body>
 ```
+
+### 5.5. Dynamic Navigation Menus
+
+Hỗ trợ quản lý `menu` ở giao diện `admin`
+
+- Khởi tạo lệnh hỗ trợ menu ở `after_theme_setup` hook
+
+```php
+add_action('after_setup_theme', 'university_features');
+
+function university_features() {
+    // Add dynamic navigation menu support
+    // args1: any name, use for calling function: wp_nav_menu
+    // args2: name that show on WordPress admin
+    register_nav_menu('headerMenuLocation', 'Header Menu Location');
+    register_nav_menu('footerLocation1', 'Footer Location 1');
+    register_nav_menu('footerLocation2', 'Footer Location 2');
+}
+```
+
+- Khai báo lệnh chèn `menu` trong file `html` tương ứng
+
+```php
+wp_nav_menu([
+  'theme_location' => 'headerMenuLocation'
+]);
+```
+
+- Vào trang WordPress `admin`, mục `Appearance`, chọn `Menus`
