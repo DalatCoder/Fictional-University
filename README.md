@@ -131,3 +131,12 @@ và load thanh điều hướng ở trên cùng của website.
 
 - `site_url()`: Trả về đường dẫn root của trang web
 - `after_theme_setup` hooks: Dùng để setup `<title>`
+
+#### 5.2. Parent & Children Pages
+
+- `get_the_ID()`: Trả về `post_id` của trang `post` hiện tại
+- `wp_get_post_parent_id($post_id)`: Truyền vào `post_id`, trả về `ID` của trang cha.
+  - Trả về `0` nếu đây là trang cha lớn nhất
+- `the_title()`: Trả về tiêu đề của trang hiện tại
+- `get_the_title($id)`: Trả về tiêu đề của trang tương ứng với `$id`
+- `get_permalink(wp_get_post_parent_id(get_the_ID()))`: Trả về đường dẫn `uri` tới trang `parent`
