@@ -174,3 +174,31 @@ $current_children_pages = get_pages([
 
 if (count($current_children_pages) == 0) { ... }
 ```
+
+### 5.5. Few improvements
+
+Thêm 1 số thẻ quan trọng vào `<head>`
+
+```htm
+<meta charset="<?php bloginfo('charset'); ?>" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<!-- Load header information: title, css, js -->
+<?php wp_head(); ?>
+```
+
+Thêm thuộc tính `lang` vào thẻ `<html>`
+
+```html
+<html <?php language_attributes(); ?>
+  >
+</html>
+```
+
+Thêm 1 số `class` mô tả chi tiết về trang hiện tại ở thẻ `body`
+
+```html
+<body <?php body_class(); ?>
+  >
+</body>
+```
