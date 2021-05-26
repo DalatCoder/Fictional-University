@@ -125,14 +125,14 @@ và load thanh điều hướng ở trên cùng của website.
 - Dùng hàm `get_theme_file_uri` để lấy đường dẫn tới thư mục chứa `template`
   sau đó truyền tên các file tương ứng vào để liên kết vào HTML.
 
-### 5. Pages
+## 5. Pages
 
-#### 5.1. Interior Page Template
+### 5.1. Interior Page Template
 
 - `site_url()`: Trả về đường dẫn root của trang web
 - `after_theme_setup` hooks: Dùng để setup `<title>`
 
-#### 5.2. Parent & Children Pages
+### 5.2. Parent & Children Pages
 
 - `get_the_ID()`: Trả về `post_id` của trang `post` hiện tại
 - `wp_get_post_parent_id($post_id)`: Truyền vào `post_id`, trả về `ID` của trang cha.
@@ -231,3 +231,7 @@ wp_nav_menu([
 ```
 
 - Vào trang WordPress `admin`, mục `Appearance`, chọn `Menus`
+
+### 5.6. Add `current-menu-item` class to page
+
+- `is_page('about-us')`: Trả về `boolean`, kiểm tra xem trang hiện tại có phải `about-us` hay không
