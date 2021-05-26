@@ -346,4 +346,8 @@ Vòng lặp `while`
 wp_reset_postdata();
 ```
 
-### 6.5. Some Quick Edits
+## 7. Workflow and automation
+
+1. Would you like your browser to auto-refresh anytime you save a change to a theme file?
+2. Would you like your CSS (Sass, Less, PostCSS) to be pre/post-processed automatically?
+3. Would you like your JS to be compiled and bundled automatically?
