@@ -302,3 +302,46 @@ Những cách hiển thị tiêu đề cho page `Archive.php`
     `category` hay không
   - `the_archive_*()`: Để hiển thị thông tin tương ứng
 - Hiển thị mô tả thêm: `the_archive_description()`
+
+### 6.4. What is a `custom query`?
+
+Oposites?
+
+- What is a `normal` WordPress query?
+- What is a `default` query?
+
+WordPress automatically queries content based on the current `URL`
+
+- `about-us`: Query about us page
+- `blog`: Query latest 10 posts
+- `have_posts()` và `the_post()` chứa các `query` mặc định của WordPress
+
+=> Default WordPress queries
+
+Custom queries: `Custom queries` allows us to load whatever we want
+wherever we want.
+
+VD: Load danh sách 2 post mới nhất để hiển thị lên giao diện trang chủ
+
+Khai báo đối tượng `WP_Query()` để custom `query`:
+
+```php
+  $homePagePosts = new WP_Query([
+      'posts_per_page' => 2,
+      'post_type' => 'post'
+  ]);
+```
+
+Vòng lặp `while`
+
+- `have_posts` chứa query mặc định kiểm tra xem còn `post` hay không
+  - => `$homePagePosts->have_posts()`
+- `the_post`: chứa query mặc định để lấy tiêu đề bài post
+  - => `$homePagePosts->the_post()`
+
+**Lưu ý**: Sau khi thực hiện `Custom query`, yêu cần gọi lại phương thức này để
+`Reset` các biến `Global` của Wordpress
+
+```php
+wp_reset_postdata();
+```
