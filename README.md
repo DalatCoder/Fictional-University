@@ -235,3 +235,4 @@ wp_nav_menu([
 ### 5.6. Add `current-menu-item` class to page
 
 - `is_page('about-us')`: Trả về `boolean`, kiểm tra xem trang hiện tại có phải `about-us` hay không
+- `current-menu-item`: Tên class thêm vào `menu` tương ứng với trang để có hiệu ứng `css` đặc biệt
