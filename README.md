@@ -265,3 +265,19 @@ Hiển thị 1 số thông tin tổng quan về `post` ở trang `PostsPage`
 - `the_time('j-n-y')`: Hiển thị thời gian tạo `post` theo format: `dd/mm/yyyy`
 - `get_the_category_list()`: Lấy danh sách các nhóm mà bài `post` thuộc về
 - `the_exerpt()`: Lấy tổng quan ngắn về bài `post`
+
+### 6.2. Pagination
+
+Vào mục `Setting`, `reading`, `Blog pages show at most`
+
+```php
+<?php echo paginate_links(); ?>
+```
+
+Hiển thị chi tiết 1 `post`, trang `single.php`
+
+- `get_header()`: Thêm header chung từ file `header.php`
+- `get_footer()`: Thêm footer chung từ file `footer.php`
+- `while(have_posts())`: Lấy bài post
+- `the_title()`: Lấy thông tin tiêu đề bài `post`
+- `the_content()`: Lấy thông tin nội dung bài `post`
