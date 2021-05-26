@@ -413,3 +413,61 @@ Tạo 1 folder mới:
 - Tên: `mu-plugins`
 
 Tạo 1 file mới trong thư mục này và đưa đoạn code khởi tạo `event post type` vào.
+
+### 8.2. Display Custom Post Types
+
+Tạo `custom query` để lấy danh sách các `event post type` từ CSDL
+
+```php
+  $homePageEvents = new WP_Query([
+      'posts_per_page' => 2,
+      'post_type' => 'event'
+  ]);
+```
+
+Tạo vòng lặp `while($homePageEvents->have_posts())` để lấy từng `event` và hiển thị tương ứng lên màn hình.
+
+Khi click vào `link`, WordPress báo `Page not found`.
+
+- Vào trang `admin`, phần `settings`, mục `Permalink()`, không cần thay đổi gì cả và nhấn `Save changes`.
+
+Ta cần phải build lại cấu trúc `url` bởi vì WordPress không hề biết về sự tồn tại của `event post type`.
+
+#### Tạo file để hiển thị chi tiết 1 custom post type
+
+Trong thư mục `theme`, tạo 1 file mới tên `single-[type]` với `type` là tên của `custom post type` vừa tạo.
+Trong trường hợp này, ta tạo 1 file mới và đặt tên: `single-event.php`.
+Đây là file hiển thị chi tiết về 1 `event` khi ta bấm vào link xem chi tiết.
+
+#### Tạo trang archive để hiển thị danh sách custom post type
+
+- Đặt thuộc tính `has_archive` với giá trị `true`
+- Tuỳ ý chỉnh sửa lại địa chỉ `url`
+
+  - Ban đầu: `/event`
+  - Sau khi thay đổi: `/events`
+
+- **Lưu ý**: Sau khi thay đổi, phải tiến hành `load` lại cấu trúc URL
+  - Vào `admin page`
+  - `Setting` -> `Permalink()` -> `Save Changes`
+
+```php
+  register_post_type('event', [
+      'rewrite' => ['slug' => 'events'],
+      'has_archive' => true,
+  ]);
+```
+
+#### Tạo file để hiển thị danh sách toàn bộ custom post type
+
+Trang hiển thị danh sách các `post` được gọi là `archive`.
+
+Để hiển thị toàn bộ các `event`, ta cần tạo 1 file mới trong thư mục `theme` và đặt tên là `archive-event.php`.
+
+Setup HTML để hiển thị danh sách toàn bộ `event` lên màn hình
+
+#### Lấy đường dẫn tới trang archive của custom post type
+
+- Hàm `site_url()`: không tối ưu, bởi vì `slug` có thể bị thay đổi trong tương lai
+- Hàm `get_post_type_archive_link('postTypeName')`: chỉ cần truyền vào tên `postType`, hàm sẽ trả về đường dẫn tương ứng
+  - `get_post_type_archive_link('event')` => Trả về liên kết đến trang `archive-event.php`
