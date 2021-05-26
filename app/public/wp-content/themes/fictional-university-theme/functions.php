@@ -22,7 +22,7 @@ function university_files()
     // true for loading at the bottom (body), false for loading at html head
     // wp_enqueue_script('university_main_js', get_theme_file_uri('/js/scripts-bundled.js'), NULL, '1.0', true);
 
-    if (strstr($_SERVER['SERVER_NAME'], 'fictional-university.locall')) {
+    if (strstr($_SERVER['SERVER_NAME'], 'fictional-university.local')) {
         wp_enqueue_script('university_main_js', 'http://localhost:3000/bundled.js', NULL, '1.0', true);
     } else {
         wp_enqueue_style('university_main_style', get_theme_file_uri('/bundled-assets/styles.bc49dbb23afb98cfc0f7.css'));
