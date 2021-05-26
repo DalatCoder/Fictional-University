@@ -369,3 +369,47 @@ wp_reset_postdata();
 ```
 
 - Khi muốn tích hợp bộ `automation` vào dự án khác thì chỉnh sửa file `webpack.config.js`
+
+## 8. Event Post Types
+
+### 8.1. Custom Post Type
+
+Mặc định, WordPress có sẵn 2 `post type` là `Post` và `Page`
+
+`Page` thực chất cũng chỉ là 1 `Post` với `label` khác.
+
+Tất cả các đối tượng nội dung trong WordPress thực chất chỉ là `Post` nhưng khác về `Label`, `Post Type Label`
+
+Cách tạo 1 `post type` mới:
+
+```php
+    register_post_type('event', [
+        'public' => true,
+        'labels' => [
+            'name' => 'Events',
+            'add_new_item' => 'Add New Event',
+            'edit_item' => 'Edit Event',
+            'all_items' => 'All Events',
+            'singular_name' => 'Event'
+        ],
+        'menu_icon' => 'dashicons-calendar'
+    ]);
+```
+
+Đặt đoạn code tạo `post type` mới ở đâu là hợp lý nhất?
+
+- `functions.php` trong thư mục `theme`: Khi người dùng đổi `theme`, code sẽ không chạy, mặc dù `event post type` vẫn
+  nằm trong CSDL, nhưng không có giao diện nào để truy cập vào cả.
+- Tạo 1 `plugin` mới: Người dùng có thể dễ dàng `activate` và `deactivate`
+- Sử dụng `must use plugin` để bắt buộc `event post type` được `load`
+
+#### Must use plugin
+
+Các file trong thư mục này sẽ chắc chắn được WordPress load và thực thi
+
+Tạo 1 folder mới:
+
+- Đường dẫn: `wp-content`
+- Tên: `mu-plugins`
+
+Tạo 1 file mới trong thư mục này và đưa đoạn code khởi tạo `event post type` vào.
