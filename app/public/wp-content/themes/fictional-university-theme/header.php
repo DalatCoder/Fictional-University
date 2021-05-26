@@ -25,12 +25,13 @@
             <nav class="main-navigation">
 
                 <?php 
+                    /*
                     wp_nav_menu([
                         'theme_location' => 'headerMenuLocation'
                     ]);
+                    */
                 ?>
 
-                <!--
                 <ul>
                     <li><a href="<?php echo site_url('/about-us'); ?>">About Us</a></li>
                     <li><a href="#">Programs</a></li>
@@ -38,7 +39,6 @@
                     <li><a href="#">Campuses</a></li>
                     <li><a href="#">Blog</a></li>
                 </ul>
-                -->
             </nav>
             <div class="site-header__util">
                 <a href="#" class="btn btn--small btn--orange float-left push-right"
