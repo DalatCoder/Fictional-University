@@ -345,3 +345,5 @@ Vòng lặp `while`
 ```php
 wp_reset_postdata();
 ```
+
+### 6.5. Some Quick Edits
