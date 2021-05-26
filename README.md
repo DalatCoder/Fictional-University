@@ -348,6 +348,24 @@ wp_reset_postdata();
 
 ## 7. Workflow and automation
 
-1. Would you like your browser to auto-refresh anytime you save a change to a theme file?
-2. Would you like your CSS (Sass, Less, PostCSS) to be pre/post-processed automatically?
-3. Would you like your JS to be compiled and bundled automatically?
+- Cài các pakage cần thiết trong file `package.json`
+- Chạy 1 số câu lệnh:
+
+- `npm run devFast`: chạy môi trường `development`, `hot reload`
+- `npm run build`: optimize cho môi trường `production`
+
+- Chỉnh sửa 1 số thông tin trong file `functions.php`
+  - Kiểm tra xem có ở môi trường `development` hay không
+  - Ở môi trường `production`, các file sẽ được tự động `rename` khi chạy lệnh `build`, chèn thêm `hash`, không sợ lỗi `cache`
+
+```php
+    if (strstr($_SERVER['SERVER_NAME'], 'fictional-university.local')) {
+        wp_enqueue_script('university_main_js', 'http://localhost:3000/bundled.js', NULL, '1.0', true);
+    } else {
+        wp_enqueue_style('university_main_style', get_theme_file_uri('/bundled-assets/styles.bc49dbb23afb98cfc0f7.css'));
+        wp_enqueue_script('university_vendor_js', get_theme_file_uri('/bundled-assets/vendors~scripts.8c97d901916ad616a264.js'), NULL, '1.0', true);
+        wp_enqueue_script('university_main_js', get_theme_file_uri('/bundled-assets/scripts.bc49dbb23afb98cfc0f7.js'), NULL, '1.0', true);
+    }
+```
+
+- Khi muốn tích hợp bộ `automation` vào dự án khác thì chỉnh sửa file `webpack.config.js`
