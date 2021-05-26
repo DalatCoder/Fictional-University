@@ -281,3 +281,24 @@ Hiển thị chi tiết 1 `post`, trang `single.php`
 - `while(have_posts())`: Lấy bài post
 - `the_title()`: Lấy thông tin tiêu đề bài `post`
 - `the_content()`: Lấy thông tin nội dung bài `post`
+
+### 6.3. Archives (category, author, date, etc,...)
+
+Xem danh sách các bài `post` thuộc về:
+
+- 1 `author`
+- 1 `category`
+- 1 `dd/mm/yyyy`
+- 1 `mm/yyyy`
+- 1 `yyyy`
+- ...
+
+Những cách hiển thị tiêu đề cho page `Archive.php`
+
+- Nhanh nhất, sử dụng có sẵn: `the_archive_title();`: Hàm có sẵn của WordPress,
+  sẽ hiển thị tương ứng cho trang `author`, `category`, `date`, ...
+- Tuỳ ý chỉnh sửa tiêu đề:
+  - Dùng `if (is_category)` để check xem page `archive` hiện tại có phải page về
+    `category` hay không
+  - `the_archive_*()`: Để hiển thị thông tin tương ứng
+- Hiển thị mô tả thêm: `the_archive_description()`
