@@ -236,3 +236,32 @@ wp_nav_menu([
 
 - `is_page('about-us')`: Trả về `boolean`, kiểm tra xem trang hiện tại có phải `about-us` hay không
 - `current-menu-item`: Tên class thêm vào `menu` tương ứng với trang để có hiệu ứng `css` đặc biệt
+
+## 6. Building Blog Section
+
+### 6.1. Blog Listing Page
+
+Bình thường khi vào trang `/`, WordPress sẽ hiển thị danh sách các `post`.
+Trong dự án này, chúng ta muốn chia `route` như sau:
+
+- `/`: Hiển thị trang `home`
+- `/blog`: Hiển thị trang `blog`
+
+Để làm được điều này, trước tiên vào mục `setting`, phần `reading` ở `WP Admin`,
+chọn phần `your homepage displays`, chuyển thành `static page`.
+
+Lúc này, ta có 2 `page` mới:
+
+- `HomePage`: Trang `home`, tương ứng với file `front-page.php`
+- `PostsPage`: Trang hiển thị danh sách `posts`, tương ứng với file `index.php`
+
+Hiển thị 1 số thông tin tổng quan về `post` ở trang `PostsPage`
+
+- `while(have_posts())`: Lặp danh sách tất cả `post`
+- `the_post()`: Lấy `post` hiện tại trong vòng lặp
+- `the_permalink()`: Lấy địa chỉ `URI` của `post`
+- `the_title()`: Lấy tiêu đề bài `post`
+- `the_author_posts_link()`: Hiển thị `author` kèm `link`
+- `the_time('j-n-y')`: Hiển thị thời gian tạo `post` theo format: `dd/mm/yyyy`
+- `get_the_category_list()`: Lấy danh sách các nhóm mà bài `post` thuộc về
+- `the_exerpt()`: Lấy tổng quan ngắn về bài `post`
