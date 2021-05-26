@@ -471,3 +471,20 @@ Setup HTML để hiển thị danh sách toàn bộ `event` lên màn hình
 - Hàm `site_url()`: không tối ưu, bởi vì `slug` có thể bị thay đổi trong tương lai
 - Hàm `get_post_type_archive_link('postTypeName')`: chỉ cần truyền vào tên `postType`, hàm sẽ trả về đường dẫn tương ứng
   - `get_post_type_archive_link('event')` => Trả về liên kết đến trang `archive-event.php`
+
+### 8.3. Some Update
+
+Thêm 1 số thông tin cho `custom post type`
+
+- `show_in_rest`: hỗ trợ REST API, chuyển đổi editor sang phiên bản `mordern`
+- `supports`: mảng các thuộc tính mà `event post type` hỗ trợ
+  - `title`: cột tiêu đề
+  - `editor`: cột nội dung, nếu không có cột này, giao diện sẽ mặc định ở mode `classic`
+  - `excerpt`: mô tả ngắn
+
+```php
+  register_post_type('event', [
+      'show_in_rest' => true,
+      'supports' => ['title', 'editor', 'excerpt'],
+  ]);
+```

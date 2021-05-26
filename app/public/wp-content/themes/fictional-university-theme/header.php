@@ -34,18 +34,37 @@
 
                     <ul>
                         <?php
+
+                        $about_page_link = site_url('/about-us');
+                        $blog_page_link = site_url('/blog');
+                        $event_page_link = get_post_type_archive_link('event');
+
                         $is_about_us_page = is_page('about-us');
                         $post_parent_id = wp_get_post_parent_id(get_the_ID());
                         $is_about_us_child_page = $post_parent_id == 14;
 
                         $is_blog_page = get_post_type() == 'post';
+
+                        $is_event_page = get_post_type() == 'event';
+
                         ?>
+
                         <li class="<?php echo ($is_about_us_page or $is_about_us_child_page) ? 'current-menu-item' : ''; ?>">
                             <a href="<?php echo site_url('/about-us'); ?>">About Us</a>
                         </li>
-                        <li><a href="#">Programs</a></li>
-                        <li><a href="#">Events</a></li>
-                        <li><a href="#">Campuses</a></li>
+
+                        <li>
+                            <a href="#">Programs</a>
+                        </li>
+
+                        <li class="<?php echo $is_event_page ? 'current-menu-item' : ''; ?>">
+                            <a href="<?php echo $event_page_link; ?>">Events</a>
+                        </li>
+
+                        <li>
+                            <a href="#">Campuses</a>
+                        </li>
+
                         <li class="<?php echo ($is_blog_page) ? 'current-menu-item' : ''; ?>">
                             <a href="<?php echo site_url('/blog'); ?>">Blog</a>
                         </li>
