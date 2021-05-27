@@ -559,3 +559,57 @@ Sau đó, dùng phương thức `format` để hiển thị tương ứng lên m
   $eventDate = new DateTime(get_field('event_date'));
   echo $eventDate->format('M');
 ```
+
+### 8.5. Custom Queries: Ordering/Sorting
+
+- Lấy tất cả `post` khi giá trị `posts_per_page` là `-1`.
+- Sắp xếp `giảm dần` theo giá trị thời gian tạo `post_date` (Mặc định)
+- Lấy giá trị `random` sau mỗi lần `reload` trang: `orderby => rand`
+
+```php
+  $homePageEvents = new WP_Query([
+      'posts_per_page' => -1,
+      'post_type' => 'event',
+      'orderby' => 'post_date',
+      'order' => 'DESC'
+  ]);
+```
+
+Sắp xếp giảm dần theo `event_date`
+
+Trong thế giới WordPress, `meta` có nghĩa là những thứ được thêm vào, được `custom` với kiểu dữ
+liệu `post` ban đầu.
+Trong trường hợp này, `event_date` là 1 trường được thêm vào, vì vậy nó được gọi là `meta`
+
+Sử dụng `meta_query` để thực thi câu lệnh truy vấn `where`, `filter` các giá trị theo điều kiện
+nhất định.
+Trong đoạn code phía dưới, chương trình chỉ lọc ra các `event` có `event_date` lớn hơn hoặc
+bằng với ngày hôm nay (không hiển thị những sự kiện đã qua lên trang chủ)
+
+Thêm phần kiểu dữ liệu so sánh trong `custom query`
+
+- `orderby`:
+  - `meta_value`: mặc định
+  - `meta_value_num`: trong trường hợp này, `event_date` có giá trị `Ymd` nên là số,
+    ta khai báo thêm kiểu dữ liệu để `order` dễ hơn
+- `type`:
+  - `numeric`: khai báo thêm kiểu dữ liệu cho `event_date` trong `custom_query` để
+    tiến hành `filter` tốt hơn.
+
+```php
+  $homePageEvents = new WP_Query([
+      'posts_per_page' => 2,
+      'post_type' => 'event',
+      'meta_key' => 'event_date',
+      'orderby' => 'meta_value_num',
+      'order' => 'ASC',
+      'meta_query' => [
+          [
+              'key' => 'event_date',
+              'compare' => '>=',
+              'value' => $today,
+              'type' => 'numeric'
+          ]
+      ]
+  ]);
+```
