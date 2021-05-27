@@ -488,3 +488,74 @@ Thêm 1 số thông tin cho `custom post type`
       'supports' => ['title', 'editor', 'excerpt'],
   ]);
 ```
+
+### 8.4. Custom Fields
+
+Hiện tại, `event post type` đang thiếu 1 `field` để lưu trữ thông tin về nyày
+diễn ra sự kiện.
+
+=> `Custom field` để tạo ra field này.
+
+Thêm `custom-fields` vào phần `supports` của `event post type`
+
+```php
+  register_post_type('event', [
+      'supports' => ['title', 'editor', 'excerpt', 'custom-fields'],
+  ]);
+```
+
+Vào chỉnh sửa 1 `event` bất kỳ, chọn dấu ':' ở góc tnên bên phải, chọn mục `Advanced`,
+bật tuỳ chọn `Custom Field` và thêm các `field` vào.
+_Tuy nhiên cách này không hiệu quả_.
+
+#### Cách hiệU quả để thêm `custom field`
+
+The Two Main (`Custom Field`) Plugins
+
+- Advanced Custom Fields (ACF)
+- CMB2 (Custom Metaboxes 2)
+
+Theo ý kiến tác giả, ổng không thích plugins, ổng cố gắng để sử dụng càng ít
+plugin càng tốt.
+
+Trong khoá học này, chúng ta sử dụng `ACF plugin`. Bởi vì nó dễ sử dụng hơn 1 tí.
+
+Bỏ phần tử `custom-fields` ở thuộc tính `supports`. Phần `custom-fields` sẽ do
+plugin quản lý
+
+```php
+    register_post_type('event', [
+        'supports' => ['title', 'editor', 'excerpt'],
+    ]);
+```
+
+#### Cài đặt plugin ACF
+
+- Vào phần `plugins`
+- `Add New`
+- Tìm kiếm `Advanced Custom Fields`
+- Cài `plugin` của tác giả `Elliot Condon`, sau đó `activate plugin`
+
+#### Thêm custom field với plugin ACF
+
+- Vào menu `Custom Fields`, chọn `Add New`
+- Đặt tên field là `Event Date`, và chọn `Add New`
+- `Display format`: chọn `d/m/Y`
+- `Return format`: chọn `Ymd` (Để dễ làm việc khi hiển thị dữ liệu lên màn hình)
+
+#### Lấy dữ liệu và hiển thị lên màn hình
+
+- `get_field('event_date')`: Trả về dữ liệu ở của cột `event_date`
+- `the_field('event_date')`: `echo` cột `event_date` lên màn hình
+
+#### Format datetime trong php
+
+Để hiển thị mỗi tháng, ta truyền chuỗi ngày tháng tương ứng vào Constructor `DateTime`,
+ở dạng `dmY`
+
+Sau đó, dùng phương thức `format` để hiển thị tương ứng lên màn hình
+
+```php
+  $eventDate = new DateTime(get_field('event_date'));
+  echo $eventDate->format('M');
+```
