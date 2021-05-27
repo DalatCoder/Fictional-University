@@ -613,3 +613,60 @@ Thêm phần kiểu dữ liệu so sánh trong `custom query`
       ]
   ]);
 ```
+
+### 8.6. Edit Default Query (Existing query)
+
+Lần này, ta xét về trang `archive-event`, liệt kê toàn bộ `event`
+
+Đường dẫn `URI` có dạng `http://fictional-university.local/events`
+
+Các `query` mặc định của WordPress tự động dựa vào từ khoá `events` trên đường dẫn để lấy
+danh sách tất cả `event` có trong CSDL.
+
+Ta không muốn thay đổi điều này, tuy nhiên ta cần phải hiển thị `post` theo thứ
+tự tăng dần (`ASC`) và chỉ hiển thị các `event` trong tương lai.
+
+Lựa chọn đầu tiên là `custom query`, tuy nhiên vẫn còn 1 lựa chọn khác tốt hơn.
+Đó chính là `edit` lại `default query` của WordPress cho hợp ý mình.
+
+`Custom query` dùng cho các trường hợp không liên quan đến việc lấy thông tin
+thông qua đường dẫn `URL`
+
+#### Chỉnh sửa `default query`
+
+Mở file `functions.php`, gắn 1 sự kiện vào `pre_get_posts` hook
+
+Trước khi `posts` được `get`, chúng ta gọi hàm `university_adjust_queries` để thay đổi
+1 số thuộc tính trên `query` này.
+
+Hàm này nhận vào tham số `query`, chính là `query` được gửi về CSDL để lấy dữ liệu
+
+- `is_admin()`: `hook` này ảnh hưởng đến cả trang `admin`, vì vậy ta check điều kiện để
+  nó chỉ xảy ra ở trang `client` thôi
+- `is_post_type_archive`: `hook` này ảnh hưởng đến tất cả trang `archive` ở phía `client`,
+  bao gồm `posts`, `pages`. Ta kiểm tra và chỉ giới hạn ở trang `archive-event` thôi
+- `$query->is_main_query`: thêm điều kiện này vào để tránh thay đổi cấu trúc `custom query`
+  - Trong trường hợp `query` này là 1 `custom query`, ta không thay đổi gì cả
+  - Trong trường hợp `query` này là `default` query, dựa trên `url`, ta cấu hình lại
+- Gọi phương thức `set` để thay đổi giá trị tương ứng theo các thuộc tính của `query`
+
+```php
+function university_adjust_queries($query)
+{
+    if (!is_admin() and is_post_type_archive('event') and $query->is_main_query()) {
+        $query->set('meta_key', 'event_date');
+        $query->set('orderby', 'meta_value_num');
+        $query->set('order', 'ASC');
+
+        $today = date('Ymd');
+        $query->set('meta_query', [
+            'key' => 'event_date',
+            'compare' => '>=',
+            'value' => $today,
+            'type' => 'numeric'
+        ]);
+    }
+}
+
+add_action('pre_get_posts', 'university_adjust_queries');
+```
