@@ -45,11 +45,11 @@
 
                         $is_blog_page = get_post_type() == 'post';
 
-                        $is_event_page = get_post_type() == 'event';
+                        $is_event_page = (get_post_type() == 'event') || (is_page('past-events'));
 
                         ?>
 
-                        <li class="<?php echo ($is_about_us_page or $is_about_us_child_page) ? 'current-menu-item' : ''; ?>">
+                        <li class="<?php echo ($is_about_us_page || $is_about_us_child_page) ? 'current-menu-item' : ''; ?>">
                             <a href="<?php echo site_url('/about-us'); ?>">About Us</a>
                         </li>
 

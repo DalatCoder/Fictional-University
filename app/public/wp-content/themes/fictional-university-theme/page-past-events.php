@@ -5,17 +5,40 @@
     </div>
     <div class="page-banner__content container container--narrow">
         <h1 class="page-banner__title">
-            All Events
+            Past Events
         </h1>
         <div class="page-banner__intro">
-            <p>See what is going on in our world.</p>
+            <p>A recap of our past events.</p>
         </div>
     </div>
 </div>
 
 <div class="container container--narrow page-section">
-    <?php while (have_posts()) : ?>
-        <?php the_post(); ?>
+
+    <?php
+
+    $today = date('Ymd');
+    $currentPage = get_query_var('paged', 1);
+
+    $pageEvents = new WP_Query([
+        'paged' => $currentPage,
+        'post_type' => 'event',
+        'meta_key' => 'event_date',
+        'orderby' => 'meta_value_num',
+        'order' => 'DESC',
+        'meta_query' => [
+            'key' => 'event_date',
+            'compare' => '<',
+            'value' => $today,
+            'type' => 'numeric'
+        ]
+    ]);
+
+    ?>
+
+
+    <?php while ($pageEvents->have_posts()) : ?>
+        <?php $pageEvents->the_post(); ?>
         <div class="event-summary">
             <a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
                 <span class="event-summary__month">
@@ -47,13 +70,10 @@
         </div>
     <?php endwhile; ?>
 
-    <?php echo paginate_links(); ?>
-
-    <hr class="section-break">
-
-    <p>Looking for a recap of past events?
-        <a href="<?php echo site_url('past-events'); ?>">Check out our past events archive</a>
-    </p>
-
+    <?php
+    echo paginate_links([
+        'total' => $pageEvents->max_num_pages
+    ]);
+    ?>
 </div>
 <?php get_footer(); ?>

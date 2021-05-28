@@ -670,3 +670,59 @@ function university_adjust_queries($query)
 
 add_action('pre_get_posts', 'university_adjust_queries');
 ```
+
+### 8.7. Past Events Page
+
+Tạo 1 trang chỉ hiển thị các `event` đã qua trong quá khứ.
+
+Vào `admin`, tạo 1 `page` mới, đặt tên `Past Events`
+
+Lúc này, trang mới tạo có `URI` như sau: `http://fictional-university.local/past-events`.
+Hiện tại, trang `page.php` đang được dùng để hiển thị. Tuy nhiên, ta không muốn hiển thị
+trang `page`. Ta cần `custom` lại như sau:
+
+Tạo 1 `file` mới trong thư mục `theme`
+
+- Cấu trúc: `page-[slug]`
+- Cụ thể: `page-past-events.php`
+- Trang này chịu trách nhiệm cho việc hiển thị nội dung ứng với `page` có slug `past-events`
+
+#### Vấn đề `pagination` không hoạt động
+
+`Pagination` chỉ có sẵn để hoạt động đối với các `query` mặc định của wordpress.
+
+Trong trường hợp này, ta tạo 1 `query` mới để lấy danh sách các `event` trong quá khứ, đây là
+1 `custom query`, do đó cần phải chỉnh sửa để `pagination` có thể hoạt động.
+
+#### Chỉnh sửa chức năng `pagination`
+
+- Bước 1: Tại hàm `paginate_links`, ta truyền thêm tham số thay vì để mặc định
+  - `total`: Tổng số trang để hiển thị (Tổng `event` / `posts_per_page`)
+  - `$pageEvents->max_num_pages`: Lấy tổng số trang nhanh chóng, không cần phải tự viết phép chia như trên
+
+```php
+    echo paginate_links([
+        'total' => $pageEvents->max_num_pages
+    ]);
+```
+
+- Bước 2: Cập nhật `custom query`
+
+Khi vào page thứ 2, `URL` có dạng `http://fictional-university.local/past-events/page/2/`
+
+Ta cần lấy được tham số `2` và đưa vào `custom query` để lấy được danh sách `event` tương ứng với trang `2`
+
+Để lấy được tham số và phân trang tương ứng theo số trang, ta cần 1 số hàm sau:
+
+- `get_query_var`: Lấy giá trị của tham số tương ứng trên `url`, trong trường hợp này là
+  tham số `paged` để lấy trang hiện tại.
+  Nếu như tham số `paged` không có thì mặc định đang ở trang `1`
+- `paged`: thuộc tính chỉ ra trang hiện tại ở `custom query` để lấy danh sách `event` tương ứng.
+
+```php
+    $currentPage = get_query_var('paged', 1);
+
+    $pageEvents = new WP_Query([
+      'paged' => $currentPage
+    ]);
+```
