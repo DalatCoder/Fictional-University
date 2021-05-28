@@ -868,3 +868,109 @@ của `program` hiện tại.
       ]
   ]);
 ```
+
+## 10. Professors Post Type
+
+### 10.1. Create new `Professor post type`
+
+#### Tạo `professor post type`
+
+Mở file `university-post-type` trong thư mục `mu-plugins` để tiến hành tạo mới 1 `post type`
+cho `professor`
+
+Trong trường hợp này, `professor` không có trang `archive`, do đó, chúng ta không cần
+phải viết lại `slug`.
+
+Cách để truy cập đến trang của `professor` là thông qua:
+
+- các `program` mà `professor` dạy.
+- các `campus` mà `professor` dạy.
+- `search`
+
+```php
+    register_post_type('professor', [
+        'show_in_rest' => true,
+        'supports' => ['title', 'editor'],
+        'public' => true,
+        'labels' => [
+            'name' => 'Professors',
+            'add_new_item' => 'Add New Professor',
+            'edit_item' => 'Edit Professor',
+            'all_items' => 'All Professors',
+            'singular_name' => 'Professor'
+        ],
+        'menu_icon' => 'dashicons-welcome-learn-more'
+    ]);
+```
+
+#### Hiển thị `single-professor`
+
+Tạo file `single-professor.php` để hiển thị thông tin chi tiết về 1 `professor`
+
+### 10.2. Tạo liên kết giữa `professor` và `program`
+
+1 `professor` có thể dạy 1 hoặc nhiều `program`
+
+Chúng ta đã có `related_programs`, điều cần làm lúc này là chỉnh lại tại khung `location`
+
+Lúc này, `related_programs` sẽ được hiển thị khi
+
+- `post type` `is equal to` `event`
+- **OR** `post type` `is equal to` `professor`
+
+### 10.3. Hiển thị danh sách `program` tương ứng ở trang `single-professor.php`
+
+```php
+  <?php $relatedPrograms = get_field('related_programs'); ?>
+
+  <?php if (!is_null($relatedPrograms)) : ?>
+
+      <hr class="section-break">
+
+      <h2 class="headline headline--medium">Subject(s) Taught</h2>
+      <ul class="link-list min-list">
+          <?php foreach ($relatedPrograms as $program) : ?>
+              <li>
+                  <a href="<?php echo get_the_permalink($program); ?>"><?php echo get_the_title($program); ?></a>
+              </li>
+          <?php endforeach; ?>
+      </ul>
+
+  <?php endif; ?>
+```
+
+### 10.4. Hiển thị danh sách `professor` tương ứng ở trang `single-program.php`
+
+```php
+  $relatedProfessors = new WP_Query([
+      'posts_per_page' => -1,
+      'post_type' => 'professor',
+      'orderby' => 'title',
+      'order' => 'ASC',
+      'meta_query' => [
+          [
+              'key' => 'related_programs',
+              'compare' => 'LIKE',
+              'value' => '"' . get_the_ID() . '"',
+          ]
+      ]
+  ]);
+```
+
+### 10.5. `wp_reset_postdata()`
+
+**wp_reset_postdata đặt giá trị `Global Post Object` về mặc định**
+
+Một số phương thức dùng các `global variable`, do đó, khi `custom query`, 1 số biến `global` bị
+thay đổi giá trị, dẫn đến câu truy vấn không còn chính xác nữa.
+
+Trong trường hợp này,
+
+- ta thực hiện `custom query` để truy vấn danh sách `professor` trước
+- `get_the_ID()` lúc này trả về giá trị là `ID` của `professor`, không phải là `ID` của `program`
+- Do đó, `custom query` để truy vấn danh sách `event` phía sau truy vấn nhầm `ID`
+
+Cách khắc phục:
+
+Sau khi thực hiện xong `custom query`, ta tiến hành gọi phương thức `wp_reset_postdata()` để
+đặt các giá trị `global` về `default`.
