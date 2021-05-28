@@ -726,3 +726,54 @@ Ta cần lấy được tham số `2` và đưa vào `custom query` để lấy 
       'paged' => $currentPage
     ]);
 ```
+
+## 9. Program post type
+
+### 9.1. Create relationship between content
+
+#### Tạo mới `program` post type
+
+Mở file `university-post-types.php` trong thư mục `mu-plugins` để tiến hành tạo mới 1 `custom post type`
+
+```php
+    register_post_type('program', [
+        'show_in_rest' => true,
+        'supports' => ['title', 'editor'],
+        'rewrite' => ['slug' => 'programs'],
+        'has_archive' => true,
+        'public' => true,
+        'labels' => [
+            'name' => 'Programs',
+            'add_new_item' => 'Add New Program',
+            'edit_item' => 'Edit Program',
+            'all_items' => 'All Programs',
+            'singular_name' => 'Program'
+        ],
+        'menu_icon' => 'dashicons-awards'
+    ]);
+```
+
+#### Tạo `custom field` để liên kết `event` với `program`
+
+1 `event` có thể có 1 hoặc nhiều `program`
+
+- Vào trang `Admin`, chọn mục `custom fields`
+- Tạo mới 1 `field group`, đặt tên `Related Program`
+- Tạo mới 1 `field` bên trong `group` này, đặt tên `Related Program(s)`: Hàm ý có thể
+  tạo liên kết đến 1 hoặc nhiều `program`
+- `Field type` chọn `Relationship`
+- `Filter by post type` chọn `program`. Trong trường hợp này, `program` là đối tượng được mang
+  đi để các đối tượng khác tạo liên kết đến.
+- `Filters` chỉ giữ lại `Search`
+- `Location`:
+  - Show this `custom field` only if `Post Type` `is equal to` `event`
+  - Trong trnờng hợp này, chỉ có duy nhất `event` có mối liên hệ với `program`,
+    1 `event` có 1 hoặc nhiều `program` liên quan. Do đó ta chọn như thế này để đảm
+    bảo điều đó.
+
+#### Liên kết `event` đến `program` tương ứng
+
+Vào `edit` 1 `event` bất kỳ, lúc này giao diện xuất hiện thêm khung cho phép chọn các
+`program` liên quan tới `event` này.
+
+Người dùng có thể chọn 1 hoặc nhiều `program`
