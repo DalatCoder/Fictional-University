@@ -38,14 +38,15 @@
                         $about_page_link = site_url('/about-us');
                         $blog_page_link = site_url('/blog');
                         $event_page_link = get_post_type_archive_link('event');
+                        $program_page_link = get_post_type_archive_link('program');
 
                         $is_about_us_page = is_page('about-us');
                         $post_parent_id = wp_get_post_parent_id(get_the_ID());
                         $is_about_us_child_page = $post_parent_id == 14;
 
                         $is_blog_page = get_post_type() == 'post';
-
                         $is_event_page = (get_post_type() == 'event') || (is_page('past-events'));
+                        $is_program_page = (get_post_type() == 'program');
 
                         ?>
 
@@ -53,8 +54,8 @@
                             <a href="<?php echo site_url('/about-us'); ?>">About Us</a>
                         </li>
 
-                        <li>
-                            <a href="#">Programs</a>
+                        <li class="<?php echo $is_program_page ? 'current-menu-item' : ''; ?>">
+                            <a href="<?php echo $program_page_link;  ?>">Programs</a>
                         </li>
 
                         <li class="<?php echo $is_event_page ? 'current-menu-item' : ''; ?>">

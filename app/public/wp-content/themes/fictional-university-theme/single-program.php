@@ -55,42 +55,47 @@
 
         ?>
 
-        <?php while ($relatedEvents->have_posts()) : ?>
-            <?php $relatedEvents->the_post(); ?>
+        <?php if ($relatedEvents->have_posts()) : ?>
 
-            <div class="event-summary">
-                <a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
-                    <span class="event-summary__month">
-                        <?php
+            <hr class="section-break">
+            <h2 class="headline headline--medium">Upcoming <?php the_title(); ?> Events</h2>
 
-                        $eventDate = new DateTime(get_field('event_date'));
-                        echo $eventDate->format('M');
+            <?php while ($relatedEvents->have_posts()) : ?>
+                <?php $relatedEvents->the_post(); ?>
 
-                        ?>
-                    </span>
-                    <span class="event-summary__day">
-                        <?php
+                <div class="event-summary">
+                    <a class="event-summary__date t-center" href="<?php the_permalink(); ?>">
+                        <span class="event-summary__month">
+                            <?php
 
-                        $eventDate = new DateTime(get_field('event_date'));
-                        echo $eventDate->format('d');
+                            $eventDate = new DateTime(get_field('event_date'));
+                            echo $eventDate->format('M');
 
-                        ?>
-                    </span>
-                </a>
-                <div class="event-summary__content">
-                    <h5 class="event-summary__title headline headline--tiny">
-                        <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
-                    </h5>
-                    <p>
-                        <?php echo has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 18); ?>
-                        <a href="<?php the_permalink(); ?>" class="nu gray">Learn more</a>
-                    </p>
+                            ?>
+                        </span>
+                        <span class="event-summary__day">
+                            <?php
+
+                            $eventDate = new DateTime(get_field('event_date'));
+                            echo $eventDate->format('d');
+
+                            ?>
+                        </span>
+                    </a>
+                    <div class="event-summary__content">
+                        <h5 class="event-summary__title headline headline--tiny">
+                            <a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+                        </h5>
+                        <p>
+                            <?php echo has_excerpt() ? get_the_excerpt() : wp_trim_words(get_the_content(), 18); ?>
+                            <a href="<?php the_permalink(); ?>" class="nu gray">Learn more</a>
+                        </p>
+                    </div>
                 </div>
-            </div>
-        <?php endwhile; ?>
+            <?php endwhile; ?>
+        <?php endif; ?>
+
         <?php wp_reset_postdata(); ?>
-
-
 
     </div>
 <?php endwhile; ?>
