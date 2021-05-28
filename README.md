@@ -777,3 +777,94 @@ Vào `edit` 1 `event` bất kỳ, lúc này giao diện xuất hiện thêm khun
 `program` liên quan tới `event` này.
 
 Người dùng có thể chọn 1 hoặc nhiều `program`
+
+### 9.2. Displaying Relationship on Frontend
+
+Hiển thị các `program` có liên quan đến `event` hiện tại
+
+Mở trang hiển thị chi tiết 1 `event`: `single-event.php`
+
+Lấy danh sách các `program` có liên quan đến `event` này thông qua câu lệnh sau
+Kết quả trả về:
+
+- `array`: Mảng chứa các `WordPress Post Object`, với mỗi phần tử là 1 `program` có kiểu dữ liệu
+  `WP_Post_Object`
+- `null`: `event` hiện tại không có bấy kỳ `program` liên quan nào
+
+```php
+  $relatedPrograms = get_field('related_programs');
+```
+
+#### Hiển thị danh sách `program` tương ứng lên màn hình
+
+Trong trường hợp này, ta chỉ hiển thị khi `event` này có các `program` liên quan.
+
+- Lặp qua mảng các `event` liên quan
+- `get_the_permalink()`: truyền vào đối tượng `WP_Post_Object` hoặc `ID` của đối tượng
+- `get_the_title()`: truyền vào đối tượng `WP_Post_Object` hoặc `ID` của đối tượng
+
+```php
+  <?php if (!is_null($relatedPrograms)) : ?>
+
+      <hr class="section-break">
+
+      <h2 class="headline headline--medium">Related Program(s)</h2>
+      <ul class="link-list min-list">
+          <?php foreach ($relatedPrograms as $program) : ?>
+              <li>
+                  <a href="<?php echo get_the_permalink($program); ?>"><?php echo get_the_title($program); ?></a>
+              </li>
+          <?php endforeach; ?>
+      </ul>
+
+  <?php endif; ?>
+```
+
+#### Hiển thị danh sách `event` tương ứng lên màn hình
+
+Trong trường hợp này, ta cần hiển thị danh sách các `event` tương ứng với `program` hiện tại
+
+Mở trang `single-program.php` và thêm 1 số `code` để lấy danh sách `event` tương ứng
+
+Tạo 1 `custom query` để lấy dữ liệu danh sách các `event` thuộc về `program` hiện tại
+
+Trong trường hợp này, ta dùng 2 bộ lọc:
+
+- `Filter` các `event` trong tương lai
+- `Filter` các `event` có `field` tên `related_programs` chứa giá trị `ID` của `program` hiện tại.
+- Lý do dùng `LIKE`
+  - 1 `event` liên kết đến nhiều `program`, khi chọn xong, WordPress lưu dưới dạng 1 mảng chứa `ID`.
+    VD: `[1, 5, 6]`, tức là `event` này liên quan đến 3 `program` lần lượt là `1, 5` và `6`.
+  - Tuy nhiên, CSDL không thể lưu trữ dữ liệu dạng `array`, do đó `WordPress` tiến hành `Serialize` mảng thành
+    1 chuỗi rồi lưu vào trường `related_programs`
+  - Chuỗi này chứa thông tin về `ID` và các số khác có thể trùng với `ID`, chính vì vậy, `WordPress` bao `ID`
+    bên trong cặp dấu nháy đôi `""`.
+    VD: `"1"::::"5"::::"6"`.
+    Do đó, ta phải dùng toán tử `LIKE` và tìm kiếm với cụm `" . $ID . "`
+
+Sau khi có kết quả, dùng vòng lặp `while($relatedEvents->have_posts())` để lặp và in ra các `event` liên quan
+của `program` hiện tại.
+
+```php
+  $today = date('Ymd');
+  $relatedEvents = new WP_Query([
+      'posts_per_page' => 2,
+      'post_type' => 'event',
+      'meta_key' => 'event_date',
+      'orderby' => 'meta_value_num',
+      'order' => 'ASC',
+      'meta_query' => [
+          [
+              'key' => 'event_date',
+              'compare' => '>=',
+              'value' => $today,
+              'type' => 'numeric'
+          ],
+          [
+              'key' => 'related_programs',
+              'compare' => 'LIKE',
+              'value' => '"' . get_the_ID() . '"',
+          ]
+      ]
+  ]);
+```
