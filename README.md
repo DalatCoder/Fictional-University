@@ -1258,3 +1258,7 @@ Các bước thực hiện có thể mô tả như sau:
 - `Filter by`, chọn `campus`
 - Show this field only if `post type` `is equal to` `program`: Chỉ show lựa chọn
   `campus` ở trang quản lý `program`
+
+## 13. Live Search UI with Javascript
+
+### 13.1. Live Search Result
