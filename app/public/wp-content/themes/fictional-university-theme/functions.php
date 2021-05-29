@@ -29,6 +29,10 @@ function university_files()
         wp_enqueue_script('university_vendor_js', get_theme_file_uri('/bundled-assets/vendors~scripts.8c97d901916ad616a264.js'), NULL, '1.0', true);
         wp_enqueue_script('university_main_js', get_theme_file_uri('/bundled-assets/scripts.bc49dbb23afb98cfc0f7.js'), NULL, '1.0', true);
     }
+
+    wp_localize_script('university_main_js', 'universityData', [
+        'root_url' => get_site_url()
+    ]);
 }
 
 function university_features()

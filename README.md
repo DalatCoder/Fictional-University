@@ -1275,3 +1275,19 @@ Các tham số có thể đưa vào
 - `?per_page`: Số lượng `post` trả về
 - `/:id`: Trả về `post` ứng với `id`
 - `?search`: Tìm kiếm theo `title`
+
+### 14.2. Đưa 1 biến từ `server php` available `global` trong code `js` phía client
+
+Mở file `functions.php`, và thêm vào đoạn code sau
+
+Lúc này tại mã nguồn sẽ có 1 đối tượng `global` tên là `universityData`, bên trong
+có 1 thuộc tính là `root_url`. Giá trị của thuộc tính này là địa chỉ `root` của
+trang web hiện tại.
+
+Điều này đảm bảo khi gọi `ajax`, ta luôn trỏ tới đúng địa chỉ `url` phía server.
+
+```php
+    wp_localize_script('university_main_js', 'universityData', [
+        'root_url' => get_site_url()
+    ]);
+```

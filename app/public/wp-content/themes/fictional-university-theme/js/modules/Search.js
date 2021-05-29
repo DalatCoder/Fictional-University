@@ -91,13 +91,14 @@ class Search {
   getResults() {
     const keyword = this.searchInput.val();
 
-    const url = `http://fictional-university.local/wp-json/wp/v2/posts?search=${keyword}`;
+    const url = `${universityData.root_url}/wp-json/wp/v2/posts?search=${keyword}`;
 
     $.getJSON(url, (posts) => {
-      if (posts.length == 0) return;
-
       this.resultsDiv.html(`
         <h2 class="search-overlay__section-title">General Information</h2>
+        ${
+          posts.length > 0
+            ? `
         <ul class="link-list min-list">
           ${posts
             .map(
@@ -106,10 +107,15 @@ class Search {
             )
             .join("")}
         </ul>
+        `
+            : `
+            <p>No general information matches that search.</p>
+        `
+        }
       `);
-    });
 
-    this.isSpinnerVisible = false;
+      this.isSpinnerVisible = false;
+    });
   }
 }
 
