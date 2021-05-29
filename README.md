@@ -1291,3 +1291,17 @@ trang web hiện tại.
         'root_url' => get_site_url()
     ]);
 ```
+
+### 14.3. Auto focus input field không hoạt động
+
+Khi mở form tìm kiếm lên, ta muốn tự động focus vào khung `input`, tuy nhiên không
+được. Lý do vì `form` tìm kiếm mất `300s` để hoàn toàn hiển thị (Do phải render hiệu
+ứng)
+
+Do đó ta cần phải đợi đến khi `form` load hoàn toàn rồi mới tiến hành `focus`
+
+```js
+setTimeout(() => {
+  this.searchInput.focus();
+}, 301);
+```

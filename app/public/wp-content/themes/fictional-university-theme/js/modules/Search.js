@@ -3,6 +3,8 @@ import $ from "jquery";
 class Search {
   // 1. describe and initiate our object
   constructor() {
+    this.addSearchHTML();
+
     this.openButton = $(".js-search-trigger");
     this.closeButton = $(".search-overlay__close");
     this.searchOverlay = $(".search-overlay");
@@ -36,6 +38,11 @@ class Search {
 
     // Remove scroll bar
     $("body").addClass("body-no-scroll");
+
+    this.searchInput.val("");
+    setTimeout(() => {
+      this.searchInput.focus();
+    }, 301);
   }
 
   closeOverlay() {
@@ -80,7 +87,7 @@ class Search {
         this.isSpinnerVisible = true;
       }
 
-      this.typingTimer = setTimeout(this.getResults.bind(this), 2000);
+      this.typingTimer = setTimeout(this.getResults.bind(this), 750);
       this.previousValue = this.searchInput.val();
     } else {
       this.resultsDiv.html(``);
@@ -116,6 +123,25 @@ class Search {
 
       this.isSpinnerVisible = false;
     });
+  }
+
+  addSearchHTML() {
+    $("body").append(`
+      <div class="search-overlay">
+        <div class="search-overlay__top">
+            <div class="container">
+                <i class="fa fa-search search-overlay__icon" aria-hidden="true"></i>
+                <input type="text" class="search-term" id="search-term" placeholder="What are you looking for?" autocomplete="off" autofocus>
+                <i class="fa fa-window-close search-overlay__close" aria-hidden="true"></i>
+            </div>
+        </div>
+
+        <div class="container">
+            <div id="search-overlay__results">
+            </div>
+        </div>
+      </div>
+    `);
   }
 }
 
