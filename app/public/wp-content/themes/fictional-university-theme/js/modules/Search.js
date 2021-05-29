@@ -101,9 +101,9 @@ class Search {
     const postAPIUrl = `${universityData.root_url}/wp-json/wp/v2/posts?search=${keyword}`;
     const pageAPIUrl = `${universityData.root_url}/wp-json/wp/v2/pages?search=${keyword}`;
 
-    $.getJSON(postAPIUrl, (posts) => {
-      $.getJSON(pageAPIUrl, (pages) => {
-        const combineResults = posts.concat(pages);
+    $.when($.getJSON(postAPIUrl), $.getJSON(pageAPIUrl)).then(
+      (posts, pages) => {
+        const combineResults = posts[0].concat(pages[0]);
 
         this.resultsDiv.html(`
         <h2 class="search-overlay__section-title">General Information</h2>
@@ -126,8 +126,13 @@ class Search {
       `);
 
         this.isSpinnerVisible = false;
-      });
-    });
+      },
+      () => {
+        this.resultsDiv.html(`
+        <p>Unexpected Error: Please try again!</p>
+        `);
+      }
+    );
   }
 
   addSearchHTML() {
