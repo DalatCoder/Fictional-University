@@ -36,12 +36,19 @@ function university_features()
     // Add <title> to head tag
     add_theme_support('title-tag');
 
+    // Add support for image thumbnails
+    add_theme_support('post-thumbnails');
+
+    // Create new image size when upload new image thumbnail
+    add_image_size('professorLandscape', 400, 260, true);
+    add_image_size('professorPortrait', 480, 650, true);
+
     // Add dynamic navigation menu support
     // args1: any name, use for calling function: wp_nav_menu
     // args2: name that show on WordPress admin
-    register_nav_menu('headerMenuLocation', 'Header Menu Location');
-    register_nav_menu('footerLocation1', 'Footer Location 1');
-    register_nav_menu('footerLocation2', 'Footer Location 2');
+    // register_nav_menu('headerMenuLocation', 'Header Menu Location');
+    // register_nav_menu('footerLocation1', 'Footer Location 1');
+    // register_nav_menu('footerLocation2', 'Footer Location 2');
 }
 
 

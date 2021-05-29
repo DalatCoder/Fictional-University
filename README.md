@@ -974,3 +974,80 @@ Cách khắc phục:
 
 Sau khi thực hiện xong `custom query`, ta tiến hành gọi phương thức `wp_reset_postdata()` để
 đặt các giá trị `global` về `default`.
+
+### 10.6. Featured Images
+
+#### Thêm `feature image` cho `professor`
+
+Mặc định, `theme` không hỗ trợ (`support`) `featured image`.
+
+Để có thể `enable` chức năng này:
+
+- Mở file `functions.php`
+- Thêm `support` cho thuộc tính `post-thumbnails`
+
+  ```php
+      add_theme_support('post-thumbnails');
+  ```
+
+  - Với các `post type` mặc định: `post`, `page`, chỉ làm như thế này là đủ
+    để kích hoạt `feature-image`.
+  - Với `custom post type`:
+
+        - Di chuyển đến tập tin: `university-post-type` trong thư mục `mu-plugins`
+        - Thêm phần tử `thumbnail` vào mảng `supports`
+
+        ```php
+              register_post_type('professor', [
+                  'supports' => ['title', 'editor', 'thumbnail'],
+              ]);
+        ```
+
+    Lúc này, khung chọn `feature image` đã xuất hiện khi `edit` 1 `professor` cụ thể
+
+#### Hiển thị `feature image` lên màn hình
+
+Dùng hàm có sẵn của `WordPress` để hiển thị ảnh `thumbnail` lên màn hình.
+
+```php
+  the_post_thumbnail();
+```
+
+Dùng hàm có sẵn `the_post_thumbnail_url` để lấy đường dẫn `src` của ảnh `thumbnail`
+
+```php
+  the_post_thumbnail_url();
+```
+
+#### Upload hình ảnh với các kích thước khác nhau
+
+Mặc định, khi `upload` `thumbnail image`, WordPress mặc định tạo ra 1 số hình ảnh
+với các kích thước khác nhau từ hình ảnh ban đầu.
+
+Nếu muốn WordPress tạo thêm ảnh có kích thước tự chọn, ta có thể làm như sau:
+
+- Mở file `functions.php`
+- Gọi hàm `add_image_size` và truyền vào các đối số tương ứng:
+  - `NickName`: Tên người dụng tự đặt cho kích thước ảnh mớI
+  - `width`: Chiều dài hình
+  - `height`: Chiều cao hình
+  - `true`: WordPress sẽ tự `crop` hình vào trung tâm để có kích thước ảnh như đã
+    truyền vào.
+
+```php
+    // Create new image size when upload new image thumbnail
+    add_image_size('professorLandscape', 400, 260, true);
+    add_image_size('professorPortrait', 480, 650, true);
+```
+
+Khi `upload` ảnh mới, `WordPress` sẽ tạo ra ảnh với các kích thước mặc định và
+ảnh với các `size` mà ta vừa định nghĩa.
+
+Tuy nhiên, với các ảnh đã được upload trước đó, `WordPress` sẽ không tự động bổ sung
+hình ảnh với kích thước ta vừa định nghĩa.
+
+#### Plugin để `resize` các hình ảnh trước đó với `size` mới định nghĩa
+
+Tìm `plugin` tên là `Regenerate Thumbnails` của tác giả `Alex Mills` và cài đặt
+
+Sau đó, vào `Admin`, chọn Menu `tools`, `regenerate thumbnails` để tạo lại.
