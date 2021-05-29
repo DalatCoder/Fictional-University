@@ -43,3 +43,6 @@ Stack trace:
 [28-May-2021 14:33:58 UTC] PHP   2. wp_get_available_translations() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\options-general.php:159
 [28-May-2021 14:33:58 UTC] PHP   3. translations_api() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\includes\translation-install.php:133
 [28-May-2021 14:33:58 UTC] PHP   4. trigger_error() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\includes\translation-install.php:68
+[29-May-2021 06:38:20 UTC] PHP Parse error:  syntax error, unexpected '$title' (T_VARIABLE), expecting '{' in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 86
+[29-May-2021 06:39:04 UTC] PHP Parse error:  syntax error, unexpected '$title' (T_VARIABLE), expecting '{' in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 86
+[29-May-2021 06:39:04 UTC] PHP Parse error:  syntax error, unexpected '$title' (T_VARIABLE), expecting '{' in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\themes\fictional-university-theme\functions.php on line 86

@@ -1134,3 +1134,56 @@ Sau đó, vào trang `admin`, edit 1 `professor` bất kỳ, chọn ảnh `Banne
 ```php
   print_r(get_field('page_banner_background'));
 ```
+
+## 11. Cleaner Code (Less Duplication)
+
+### 11.1. Reduce Duplicate Code
+
+Tạo 1 `function` để tự động hoá việc `render` phần tử `banner` ra màn hình
+
+Mở file `functions.php` và tạo hàm sau
+
+Hàm này nhận vào đối số là 1 `assoc array`, các phần tử của `array` này gồm có:
+
+- `title`: Tiêu đề chính của `Banner`
+- `subtitle`: Tiêu đề phụ của `Banner`
+- `photo`: Ảnh nền background
+
+```php
+  <?php function pageBanner($args = [])
+  {
+      $title = $args['title'];
+      $subtitle = $args['subtitle'];
+      $photo = $args['photo'];
+
+      // Default values
+
+      if (!$title)
+          $title = get_the_title();
+
+
+      if (!$subtitle)
+          $subtitle = get_field('page_banner_subtitle');
+
+      if (!$photo) {
+          if (get_field('page_banner_background_image'))
+              $photo = get_field('page_banner_background_image')['sizes']['pageBanner'];
+          else
+              $photo = get_theme_file_uri('/images/ocean.jpg');
+      }
+
+  ?>
+
+      <div class="page-banner">
+          <div class="page-banner__bg-image" style="background-image: url(<?php echo $photo;  ?>);">
+          </div>
+          <div class="page-banner__content container container--narrow">
+              <h1 class="page-banner__title"><?php echo $title; ?></h1>
+              <div class="page-banner__intro">
+                  <p><?php echo $subtitle; ?></p>
+              </div>
+          </div>
+      </div>
+  <?php } ?>
+
+```
