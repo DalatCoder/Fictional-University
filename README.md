@@ -1226,3 +1226,35 @@ wp_reset_postdata();
 ## 12. Campus Post Type
 
 ### 12.1. Campus Post Type
+
+```php
+    register_post_type('campus', [
+        'show_in_rest' => true,
+        'supports' => ['title', 'editor', 'excerpt'],
+        'rewrite' => ['slug' => 'campuses'],
+        'has_archive' => true,
+        'public' => true,
+        'labels' => [
+            'name' => 'Campus',
+            'add_new_item' => 'Add New Campus',
+            'edit_item' => 'Edit Campus',
+            'all_items' => 'All Campuses',
+            'singular_name' => 'Campus'
+        ],
+        'menu_icon' => 'dashicons-location-alt'
+    ]);
+```
+
+### 12.2. Tạo mối liên hệ giữa `Campus` và `Program`
+
+Một `program` có thể liên kết đến 1 hoặc nhiều `campus`
+
+Các bước thực hiện có thể mô tả như sau:
+
+- Vào trang `admin`
+- Chọn menu `custom fields`
+- Tạo `field group` mới và tạo `field` mới, đặt tên `Related Campus`
+- Kiểu dữ liệu, chọn `Relationship`
+- `Filter by`, chọn `campus`
+- Show this field only if `post type` `is equal to` `program`: Chỉ show lựa chọn
+  `campus` ở trang quản lý `program`

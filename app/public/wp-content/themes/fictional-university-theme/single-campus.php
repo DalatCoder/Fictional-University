@@ -8,9 +8,9 @@
     <div class="container container--narrow page-section">
         <div class="metabox metabox--position-up metabox--with-home-link">
             <p>
-                <a class="metabox__blog-home-link" href="<?php echo get_post_type_archive_link('program'); ?>">
+                <a class="metabox__blog-home-link" href="<?php echo get_post_type_archive_link('campus'); ?>">
                     <i class="fa fa-ho  me" aria-hidden="true"></i>
-                    All Programs
+                    All Campuses
                 </a>
                 <span class="metabox__main">
                     <?php the_title(); ?>
@@ -22,14 +22,14 @@
 
         <?php
 
-        $relatedProfessors = new WP_Query([
+        $relatedPrograms = new WP_Query([
             'posts_per_page' => -1,
-            'post_type' => 'professor',
+            'post_type' => 'program',
             'orderby' => 'title',
             'order' => 'ASC',
             'meta_query' => [
                 [
-                    'key' => 'related_programs',
+                    'key' => 'related_campus',
                     'compare' => 'LIKE',
                     'value' => '"' . get_the_ID() . '"',
                 ]
@@ -38,20 +38,17 @@
 
         ?>
 
-        <?php if ($relatedProfessors->have_posts()) : ?>
+        <?php if ($relatedPrograms->have_posts()) : ?>
 
             <hr class="section-break">
-            <h2 class="headline headline--medium"><?php the_title(); ?> Professors</h2>
+            <h2 class="headline headline--medium">Programs Available At This Campus</h2>
 
-            <ul class="professor-cards">
-                <?php while ($relatedProfessors->have_posts()) : ?>
-                    <?php $relatedProfessors->the_post(); ?>
-                    <li class="professor-card__list-item">
-                        <a class="professor-card" href="<?php the_permalink(); ?>">
-                            <img class="professor-card__image" src="<?php the_post_thumbnail_url('professorLandscape'); ?>">
-                            <span class="professor-card__name">
-                                <?php the_title(); ?>
-                            </span>
+            <ul class="min-list link-list">
+                <?php while ($relatedPrograms->have_posts()) : ?>
+                    <?php $relatedPrograms->the_post(); ?>
+                    <li>
+                        <a href="<?php the_permalink(); ?>">
+                            <?php the_title(); ?>
                         </a>
                     </li>
                 <?php endwhile; ?>
@@ -100,26 +97,6 @@
         <?php endif; ?>
 
         <?php wp_reset_postdata(); ?>
-
-        <?php
-        $relatedCampuses = get_field('related_campus');
-        ?>
-
-        <?php if ($relatedCampuses) : ?>
-
-            <hr class="section-break">
-
-            <h2 class="headline headline--medium"><?php the_title(); ?> is Available At These Campuses:</h2>
-
-            <ul class="min-list link-list">
-                <?php foreach ($relatedCampuses as $campus) : ?>
-                    <li>
-                        <a href="<?php echo get_the_permalink($campus); ?>"><?php echo get_the_title($campus); ?></a>
-                    </li>
-                <?php endforeach; ?>
-            </ul>
-
-        <?php endif; ?>
 
     </div>
 <?php endwhile; ?>

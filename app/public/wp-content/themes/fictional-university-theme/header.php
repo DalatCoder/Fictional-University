@@ -39,6 +39,7 @@
                         $blog_page_link = site_url('/blog');
                         $event_page_link = get_post_type_archive_link('event');
                         $program_page_link = get_post_type_archive_link('program');
+                        $campust_page_link = get_post_type_archive_link('campus');
 
                         $is_about_us_page = is_page('about-us');
                         $post_parent_id = wp_get_post_parent_id(get_the_ID());
@@ -47,6 +48,7 @@
                         $is_blog_page = get_post_type() == 'post';
                         $is_event_page = (get_post_type() == 'event') || (is_page('past-events'));
                         $is_program_page = (get_post_type() == 'program');
+                        $is_campus_page = get_post_type() == 'campus';
 
                         ?>
 
@@ -62,8 +64,8 @@
                             <a href="<?php echo $event_page_link; ?>">Events</a>
                         </li>
 
-                        <li>
-                            <a href="#">Campuses</a>
+                        <li class="<?php echo $is_campus_page ? 'current-menu-item' : ''; ?>">
+                            <a href="<?php echo $campust_page_link; ?>">Campuses</a>
                         </li>
 
                         <li class="<?php echo ($is_blog_page) ? 'current-menu-item' : ''; ?>">
