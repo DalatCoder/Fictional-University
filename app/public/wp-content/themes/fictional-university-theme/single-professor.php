@@ -3,6 +3,8 @@
 <?php while (have_posts()) : ?>
     <?php the_post(); ?>
 
+    <?php pageBanner(); ?>
+
     <div class="container container--narrow page-section">
         <div class="generic-content">
             <div class="row group">
