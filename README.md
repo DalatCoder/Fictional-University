@@ -1051,3 +1051,43 @@ hình ảnh với kích thước ta vừa định nghĩa.
 Tìm `plugin` tên là `Regenerate Thumbnails` của tác giả `Alex Mills` và cài đặt
 
 Sau đó, vào `Admin`, chọn Menu `tools`, `regenerate thumbnails` để tạo lại.
+
+### 10.7. Displaying Custom Image Sizes
+
+Để sử dụng `custom image sizes`, ta chỉ cần truyền `nickname` tương ứng vào
+hàm lấy `image`
+
+```php
+  the_post_thumbnail('professorPortrait');
+  the_post_thumbnail_url('professorLandscape');
+```
+
+### 10.8. WordPress crop images
+
+Mặc định, `WordPress` sẽ `crop` vào trung tâm của bức hình để có được kích thước
+mà ta nhập vào.
+
+Mặc định, khi chọn `true`, `WordPress` sẽ crop hình vào trung tâm
+
+```php
+    add_image_size('professorLandscape', 400, 260, true);
+    add_image_size('professorPortrait', 480, 650, true);
+```
+
+Để có thể kiểm soát việc `crop` hình của `WordPress`, ta có thể truyền vào
+1 mảng thay vì chỉ `true`
+
+```php
+    add_image_size('professorLandscape', 400, 260, ['top', 'left']);
+```
+
+#### Sử dụng `plugin` để crop hình dễ hơn
+
+Mở trang `plugin` và tìm kiếm từ khoá `manual image crop tomasz`
+
+Vào `edit` 1 `professor`, chọn hình ảnh, chức năng `crop image` xuất hiện,
+`click` vào chức năng này và chọn, thay đổi các vùng chọn khác nhau để được bức
+hình ưng ý. Sau đó chọn `crop`.
+
+Quay lại `browser`, nhấn giữ `shift` + `click` nút `reload` trang để tiến hành
+`hard reload`, loại bỏ `cache` của `browser`.
