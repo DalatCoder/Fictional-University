@@ -1188,4 +1188,37 @@ Hàm này nhận vào đối số là 1 `assoc array`, các phần tử của `a
 
 ```
 
-### 11.2. Actually Using Our `pageBanner()` Function
+### 11.2. Reduce Duplicate Code: `get_template_part()`
+
+Một cách khác để tận dụng `code`
+
+Trong website, phân code hiển thị `event` bị lặp lại rất nhiều, ta có thể tách
+đoạn code này sang 1 file mới và `include` file này để dùng lại.
+
+Các bước:
+
+- Tách đoạn code hiển thị `event` ra 1 file tên `content-event.php` và đặt
+  trong folder tên `template-parts`
+
+- Sử dụng hàm `get_template_part()` và truyền vào các đối số tương ứng:
+
+  - `slug`: Đường dẫn tới nơi chứa file `template`
+  - `args`: Phần tên phía sau dấu `-`, dùng trong trường hợp cần chọn `dynamic`
+
+Ở đoạn code dưới đây, file template tên là `content-event` và được đặt trong
+thư mục `template-parts`
+
+```php
+while ($homePageEvents->have_posts()) {
+    $homePageEvents->the_post();
+    get_template_part('template-parts/content', 'event');
+}
+
+wp_reset_postdata();
+```
+
+### 11.3. Create a `function` VS `get_template_part()`
+
+- `function`: Khi cần truyền các tham số để `customize`
+- `get_template_part`: Khi đoạn code chỉ chứa các `html` hoặc `php` dùng chung,
+  bị lặp đi lặp lại nhuều lần, không yêu cầu `customize`
