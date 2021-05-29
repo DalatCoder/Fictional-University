@@ -93,11 +93,22 @@ class Search {
 
     const url = `http://fictional-university.local/wp-json/wp/v2/posts?search=${keyword}`;
 
-    $.getJSON(url, function (posts) {
-      console.log(posts);
+    $.getJSON(url, (posts) => {
+      if (posts.length == 0) return;
+
+      this.resultsDiv.html(`
+        <h2 class="search-overlay__section-title">General Information</h2>
+        <ul class="link-list min-list">
+          ${posts
+            .map(
+              (post) =>
+                `<li><a href="${post.link}">${post.title.rendered}</a></li>`
+            )
+            .join("")}
+        </ul>
+      `);
     });
 
-    this.resultsDiv.html("");
     this.isSpinnerVisible = false;
   }
 }
