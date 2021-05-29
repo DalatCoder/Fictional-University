@@ -1091,3 +1091,46 @@ hình ưng ý. Sau đó chọn `crop`.
 
 Quay lại `browser`, nhấn giữ `shift` + `click` nút `reload` trang để tiến hành
 `hard reload`, loại bỏ `cache` của `browser`.
+
+### 10.9. Making "Page Banner" Dynamic
+
+WordPress mặc định chỉ cho phép duy nhất 1 ảnh làm `feature-image`.
+
+Ở trang `single-professor`, ta đã có 1 ảnh `feature-image`, do đó, để đặt
+`background banner`, ta cần 1 tính năng khác của `WordPress`
+
+#### Thêm cột để lưu trữ thông tin
+
+Để tuỳ chỉnh `page banner`, ta cần lưu thông tin của
+
+- Banner background
+- Banner subtitle
+
+Vào trang `admin`, chọn `custom fields`.
+
+Thêm 1 `field group` mới, đặt tên `page banner`, và thêm các cột tương ứng
+
+- `Page Banner Background Image`
+- `Page Banner Subtitle`
+
+Tại mục `Location`, bởi vì tất cả trang đều có `Page Banner`, do đó ta muốn hiển thị
+ở tất cả các trang, ta có thể dùng mẹo sau:
+
+- Chọn `post type` `is equal to` `post`: Show trên `post`
+- **OR**, chọn `post type` `is not equal to` `post`: Show trên các trang còn lại
+
+#### Thêm kích thước ảnh mới để phù hợp với `Background Banner`
+
+Mở file `functions.php` và thêm 1 kích thước ảnh mới
+
+```php
+    add_image_size('pageBanner', 1500, 350, true);
+```
+
+Sau đó, vào trang `admin`, edit 1 `professor` bất kỳ, chọn ảnh `Banner` và `update`
+
+#### Hiển thị ảnh Banner
+
+```php
+  print_r(get_field('page_banner_background'));
+```

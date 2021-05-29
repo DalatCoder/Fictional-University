@@ -42,6 +42,7 @@ function university_features()
     // Create new image size when upload new image thumbnail
     add_image_size('professorLandscape', 400, 260, true);
     add_image_size('professorPortrait', 480, 650, true);
+    add_image_size('pageBanner', 1500, 350, true);
 
     // Add dynamic navigation menu support
     // args1: any name, use for calling function: wp_nav_menu
