@@ -98,16 +98,20 @@ class Search {
   getResults() {
     const keyword = this.searchInput.val();
 
-    const url = `${universityData.root_url}/wp-json/wp/v2/posts?search=${keyword}`;
+    const postAPIUrl = `${universityData.root_url}/wp-json/wp/v2/posts?search=${keyword}`;
+    const pageAPIUrl = `${universityData.root_url}/wp-json/wp/v2/pages?search=${keyword}`;
 
-    $.getJSON(url, (posts) => {
-      this.resultsDiv.html(`
+    $.getJSON(postAPIUrl, (posts) => {
+      $.getJSON(pageAPIUrl, (pages) => {
+        const combineResults = posts.concat(pages);
+
+        this.resultsDiv.html(`
         <h2 class="search-overlay__section-title">General Information</h2>
         ${
-          posts.length > 0
+          combineResults.length > 0
             ? `
         <ul class="link-list min-list">
-          ${posts
+          ${combineResults
             .map(
               (post) =>
                 `<li><a href="${post.link}">${post.title.rendered}</a></li>`
@@ -121,7 +125,8 @@ class Search {
         }
       `);
 
-      this.isSpinnerVisible = false;
+        this.isSpinnerVisible = false;
+      });
     });
   }
 
