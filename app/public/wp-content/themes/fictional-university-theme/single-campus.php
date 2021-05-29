@@ -57,47 +57,6 @@
 
         <?php wp_reset_postdata(); ?>
 
-        <?php
-
-        $today = date('Ymd');
-        $relatedEvents = new WP_Query([
-            'posts_per_page' => 2,
-            'post_type' => 'event',
-            'meta_key' => 'event_date',
-            'orderby' => 'meta_value_num',
-            'order' => 'ASC',
-            'meta_query' => [
-                [
-                    'key' => 'event_date',
-                    'compare' => '>=',
-                    'value' => $today,
-                    'type' => 'numeric'
-                ],
-                [
-                    'key' => 'related_programs',
-                    'compare' => 'LIKE',
-                    'value' => '"' . get_the_ID() . '"',
-                ]
-            ]
-        ]);
-
-        ?>
-
-        <?php if ($relatedEvents->have_posts()) : ?>
-
-            <hr class="section-break">
-            <h2 class="headline headline--medium">Upcoming <?php the_title(); ?> Events</h2>
-
-            <?php while ($relatedEvents->have_posts()) : ?>
-                <?php $relatedEvents->the_post(); ?>
-
-                <?php get_template_part('template-parts/content-event'); ?>
-
-            <?php endwhile; ?>
-        <?php endif; ?>
-
-        <?php wp_reset_postdata(); ?>
-
     </div>
 <?php endwhile; ?>
 
