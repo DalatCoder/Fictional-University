@@ -97,7 +97,7 @@ add_action('pre_get_posts', 'university_adjust_queries');
         $subtitle = get_field('page_banner_subtitle');
 
     if (!$photo) {
-        if (get_field('page_banner_background_image'))
+        if (get_field('page_banner_background_image') && !is_archive() && !is_home())
             $photo = get_field('page_banner_background_image')['sizes']['pageBanner'];
         else
             $photo = get_theme_file_uri('/images/ocean.jpg');
