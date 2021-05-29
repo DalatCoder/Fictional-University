@@ -1222,3 +1222,7 @@ wp_reset_postdata();
 - `function`: Khi cần truyền các tham số để `customize`
 - `get_template_part`: Khi đoạn code chỉ chứa các `html` hoặc `php` dùng chung,
   bị lặp đi lặp lại nhuều lần, không yêu cầu `customize`
+
+## 12. Campus Post Type
+
+### 12.1. Campus Post Type

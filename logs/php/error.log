@@ -112,3 +112,123 @@ Stack trace:
 [29-May-2021 07:20:02 UTC] PHP   2. require() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\index.php:17
 [29-May-2021 07:20:02 UTC] PHP   3. require_once() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-blog-header.php:19
 [29-May-2021 07:20:02 UTC] PHP   4. include() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\template-loader.php:106
+[29-May-2021 08:32:53 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'universityMapKey' not found or invalid function name in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php on line 292
+[29-May-2021 08:32:53 UTC] PHP Stack trace:
+[29-May-2021 08:32:53 UTC] PHP   1. {main}() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:0
+[29-May-2021 08:32:53 UTC] PHP   2. require() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:187
+[29-May-2021 08:32:53 UTC] PHP   3. require_once() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\edit-form-blocks.php:450
+[29-May-2021 08:32:53 UTC] PHP   4. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\admin-header.php:102
+[29-May-2021 08:32:53 UTC] PHP   5. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:32:53 UTC] PHP   6. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:32:53 UTC] PHP   7. ACF_Assets->enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:292
+[29-May-2021 08:32:53 UTC] PHP   8. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\assets.php:374
+[29-May-2021 08:32:53 UTC] PHP   9. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:32:53 UTC] PHP  10. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:32:53 UTC] PHP  11. acf_field_google_map->input_admin_enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:290
+[29-May-2021 08:32:53 UTC] PHP  12. apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\fields\class-acf-field-google-map.php:81
+[29-May-2021 08:32:53 UTC] PHP  13. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:212
+[29-May-2021 08:32:56 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'universityMapKey' not found or invalid function name in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php on line 292
+[29-May-2021 08:32:56 UTC] PHP Stack trace:
+[29-May-2021 08:32:56 UTC] PHP   1. {main}() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:0
+[29-May-2021 08:32:56 UTC] PHP   2. require() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:187
+[29-May-2021 08:32:56 UTC] PHP   3. require_once() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\edit-form-blocks.php:450
+[29-May-2021 08:32:56 UTC] PHP   4. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\admin-header.php:102
+[29-May-2021 08:32:56 UTC] PHP   5. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:32:56 UTC] PHP   6. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:32:56 UTC] PHP   7. ACF_Assets->enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:292
+[29-May-2021 08:32:56 UTC] PHP   8. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\assets.php:374
+[29-May-2021 08:32:56 UTC] PHP   9. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:32:56 UTC] PHP  10. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:32:56 UTC] PHP  11. acf_field_google_map->input_admin_enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:290
+[29-May-2021 08:32:56 UTC] PHP  12. apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\fields\class-acf-field-google-map.php:81
+[29-May-2021 08:32:56 UTC] PHP  13. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:212
+[29-May-2021 08:33:05 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'universityMapKey' not found or invalid function name in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php on line 292
+[29-May-2021 08:33:05 UTC] PHP Stack trace:
+[29-May-2021 08:33:05 UTC] PHP   1. {main}() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:0
+[29-May-2021 08:33:05 UTC] PHP   2. require() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:187
+[29-May-2021 08:33:05 UTC] PHP   3. require_once() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\edit-form-blocks.php:450
+[29-May-2021 08:33:05 UTC] PHP   4. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\admin-header.php:102
+[29-May-2021 08:33:05 UTC] PHP   5. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:33:05 UTC] PHP   6. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:33:05 UTC] PHP   7. ACF_Assets->enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:292
+[29-May-2021 08:33:05 UTC] PHP   8. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\assets.php:374
+[29-May-2021 08:33:05 UTC] PHP   9. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:33:05 UTC] PHP  10. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:33:05 UTC] PHP  11. acf_field_google_map->input_admin_enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:290
+[29-May-2021 08:33:05 UTC] PHP  12. apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\fields\class-acf-field-google-map.php:81
+[29-May-2021 08:33:05 UTC] PHP  13. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:212
+[29-May-2021 08:33:08 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'universityMapKey' not found or invalid function name in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php on line 292
+[29-May-2021 08:33:08 UTC] PHP Stack trace:
+[29-May-2021 08:33:08 UTC] PHP   1. {main}() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:0
+[29-May-2021 08:33:08 UTC] PHP   2. require() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:187
+[29-May-2021 08:33:08 UTC] PHP   3. require_once() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\edit-form-blocks.php:450
+[29-May-2021 08:33:08 UTC] PHP   4. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\admin-header.php:102
+[29-May-2021 08:33:08 UTC] PHP   5. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:33:08 UTC] PHP   6. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:33:08 UTC] PHP   7. ACF_Assets->enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:292
+[29-May-2021 08:33:08 UTC] PHP   8. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\assets.php:374
+[29-May-2021 08:33:08 UTC] PHP   9. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:33:08 UTC] PHP  10. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:33:08 UTC] PHP  11. acf_field_google_map->input_admin_enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:290
+[29-May-2021 08:33:08 UTC] PHP  12. apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\fields\class-acf-field-google-map.php:81
+[29-May-2021 08:33:08 UTC] PHP  13. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:212
+[29-May-2021 08:33:09 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'universityMapKey' not found or invalid function name in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php on line 292
+[29-May-2021 08:33:09 UTC] PHP Stack trace:
+[29-May-2021 08:33:09 UTC] PHP   1. {main}() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:0
+[29-May-2021 08:33:09 UTC] PHP   2. require() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:187
+[29-May-2021 08:33:09 UTC] PHP   3. require_once() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\edit-form-blocks.php:450
+[29-May-2021 08:33:09 UTC] PHP   4. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\admin-header.php:102
+[29-May-2021 08:33:09 UTC] PHP   5. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:33:09 UTC] PHP   6. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:33:09 UTC] PHP   7. ACF_Assets->enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:292
+[29-May-2021 08:33:09 UTC] PHP   8. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\assets.php:374
+[29-May-2021 08:33:09 UTC] PHP   9. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:33:09 UTC] PHP  10. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:33:09 UTC] PHP  11. acf_field_google_map->input_admin_enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:290
+[29-May-2021 08:33:09 UTC] PHP  12. apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\fields\class-acf-field-google-map.php:81
+[29-May-2021 08:33:09 UTC] PHP  13. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:212
+[29-May-2021 08:33:12 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'universityMapKey' not found or invalid function name in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php on line 292
+[29-May-2021 08:33:12 UTC] PHP Stack trace:
+[29-May-2021 08:33:12 UTC] PHP   1. {main}() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:0
+[29-May-2021 08:33:12 UTC] PHP   2. require() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:187
+[29-May-2021 08:33:12 UTC] PHP   3. require_once() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\edit-form-blocks.php:450
+[29-May-2021 08:33:12 UTC] PHP   4. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\admin-header.php:102
+[29-May-2021 08:33:12 UTC] PHP   5. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:33:12 UTC] PHP   6. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:33:12 UTC] PHP   7. ACF_Assets->enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:292
+[29-May-2021 08:33:12 UTC] PHP   8. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\assets.php:374
+[29-May-2021 08:33:12 UTC] PHP   9. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:33:12 UTC] PHP  10. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:33:12 UTC] PHP  11. acf_field_google_map->input_admin_enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:290
+[29-May-2021 08:33:12 UTC] PHP  12. apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\fields\class-acf-field-google-map.php:81
+[29-May-2021 08:33:12 UTC] PHP  13. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:212
+[29-May-2021 08:33:24 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'universityMapKey' not found or invalid function name in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php on line 292
+[29-May-2021 08:33:24 UTC] PHP Stack trace:
+[29-May-2021 08:33:24 UTC] PHP   1. {main}() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:0
+[29-May-2021 08:33:24 UTC] PHP   2. require() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:187
+[29-May-2021 08:33:24 UTC] PHP   3. require_once() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\edit-form-blocks.php:450
+[29-May-2021 08:33:24 UTC] PHP   4. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\admin-header.php:102
+[29-May-2021 08:33:24 UTC] PHP   5. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:33:24 UTC] PHP   6. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:33:24 UTC] PHP   7. ACF_Assets->enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:292
+[29-May-2021 08:33:24 UTC] PHP   8. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\assets.php:374
+[29-May-2021 08:33:24 UTC] PHP   9. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:33:24 UTC] PHP  10. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:33:24 UTC] PHP  11. acf_field_google_map->input_admin_enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:290
+[29-May-2021 08:33:24 UTC] PHP  12. apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\fields\class-acf-field-google-map.php:81
+[29-May-2021 08:33:24 UTC] PHP  13. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:212
+[29-May-2021 08:33:27 UTC] PHP Warning:  call_user_func_array() expects parameter 1 to be a valid callback, function 'universityMapKey' not found or invalid function name in C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php on line 292
+[29-May-2021 08:33:27 UTC] PHP Stack trace:
+[29-May-2021 08:33:27 UTC] PHP   1. {main}() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:0
+[29-May-2021 08:33:27 UTC] PHP   2. require() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\post.php:187
+[29-May-2021 08:33:27 UTC] PHP   3. require_once() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\edit-form-blocks.php:450
+[29-May-2021 08:33:27 UTC] PHP   4. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-admin\admin-header.php:102
+[29-May-2021 08:33:27 UTC] PHP   5. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:33:27 UTC] PHP   6. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:33:27 UTC] PHP   7. ACF_Assets->enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:292
+[29-May-2021 08:33:27 UTC] PHP   8. do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\assets.php:374
+[29-May-2021 08:33:27 UTC] PHP   9. WP_Hook->do_action() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:484
+[29-May-2021 08:33:27 UTC] PHP  10. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:316
+[29-May-2021 08:33:27 UTC] PHP  11. acf_field_google_map->input_admin_enqueue_scripts() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\class-wp-hook.php:290
+[29-May-2021 08:33:27 UTC] PHP  12. apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-content\plugins\advanced-custom-fields\includes\fields\class-acf-field-google-map.php:81
+[29-May-2021 08:33:27 UTC] PHP  13. WP_Hook->apply_filters() C:\Users\HieuDauBo\Local Sites\fictional-university\app\public\wp-includes\plugin.php:212
