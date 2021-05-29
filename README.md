@@ -1187,3 +1187,5 @@ Hàm này nhận vào đối số là 1 `assoc array`, các phần tử của `a
   <?php } ?>
 
 ```
+
+### 11.2. Actually Using Our `pageBanner()` Function
