@@ -89,6 +89,14 @@ class Search {
   }
 
   getResults() {
+    const keyword = this.searchInput.val();
+
+    const url = `http://fictional-university.local/wp-json/wp/v2/posts?search=${keyword}`;
+
+    $.getJSON(url, function (posts) {
+      console.log(posts);
+    });
+
     this.resultsDiv.html("");
     this.isSpinnerVisible = false;
   }

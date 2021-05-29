@@ -1261,4 +1261,17 @@ Các bước thực hiện có thể mô tả như sau:
 
 ## 13. Live Search UI with Javascript
 
-### 13.1. Live Search Result
+## 14. WordPress REST API (AJAX)
+
+### 14.1. Loading WP Content with JS in Real-time
+
+#### WordPress JSON
+
+Truy cập vào địa chỉ `http://fictional-university.local/wp-json/wp/v2/posts`,
+lúc này một mảng `json` sẽ được trả về với mỗi phần tử là 1 đối tượng `post`
+
+Các tham số có thể đưa vào
+
+- `?per_page`: Số lượng `post` trả về
+- `/:id`: Trả về `post` ứng với `id`
+- `?search`: Tìm kiếm theo `title`
