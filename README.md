@@ -1483,3 +1483,79 @@ Code của chúng ta sẽ như sau:
       return $professorResults;
   }
 ```
+
+#### Working with Multiple Post Types
+
+Hiện tại, `api` của chúng ta chỉ truy xuất dữ liệu từ `post type` `professor`.
+
+Tuy nhiên, chúng ta muốn `search` ở nhiều `post type` khác nữa. Tại thuộc tính
+`post type`, chúng ta chỉ cần đưa vào 1 mảng, bên trong chứa các `post type` lnên
+quan.
+
+Lúc này, code sẽ như sau:
+
+```php
+  function universitySearchResults($data)
+  {
+      $clientKeyword = $data['term'];
+      $clientKeyword = sanitize_text_field($clientKeyword);
+
+      $mainQuery = new WP_Query([
+          'post_type' => ['post', 'page', 'professor', 'program', 'campus', 'event'],
+          's' => $clientKeyword
+      ]);
+
+      $results = [
+          'generalInfo' => [],
+          'professors' => [],
+          'programs' => [],
+          'events' => [],
+          'campuses' => []
+      ];
+
+      while ($mainQuery->have_posts()) {
+          $mainQuery->the_post();
+
+          $postType = get_post_type();
+
+          switch ($postType) {
+              case 'professor':
+                  array_push($results['professors'], [
+                      'title' => get_the_title(),
+                      'permalink' => get_the_permalink()
+                  ]);
+                  break;
+
+              case 'program':
+                  array_push($results['programs'], [
+                      'title' => get_the_title(),
+                      'permalink' => get_the_permalink()
+                  ]);
+                  break;
+
+              case 'campus':
+                  array_push($results['campuses'], [
+                      'title' => get_the_title(),
+                      'permalink' => get_the_permalink()
+                  ]);
+                  break;
+
+              case 'event':
+                  array_push($results['events'], [
+                      'title' => get_the_title(),
+                      'permalink' => get_the_permalink()
+                  ]);
+                  break;
+
+              default:
+                  array_push($results['generalInfo'], [
+                      'title' => get_the_title(),
+                      'permalink' => get_the_permalink()
+                  ]);
+                  break;
+          }
+      }
+
+      return $results;
+  }
+```
