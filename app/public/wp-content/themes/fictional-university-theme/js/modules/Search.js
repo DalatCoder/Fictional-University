@@ -219,7 +219,6 @@ class Search {
             ${
               results.events.length
                 ? `
-                  <ul class="professor-cards">
                     ${results.events
                       .map((item) => {
                         const title = item.title;
@@ -251,7 +250,6 @@ class Search {
                         `;
                       })
                       .join("")}
-                  </ul>
               `
                 : `
                   <p>
