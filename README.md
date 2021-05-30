@@ -1562,4 +1562,41 @@ Lúc này, code sẽ như sau:
 
 ## 16 Combining Frontend && Backend
 
-### 16.1. Updating Front-end JS to use new API URL
+### Vấn đề search nên `program` theo nội dung dẫn đến kết quả sai
+
+Mặc định, WordPress sẽ tìm kiếm ở 2 trường:
+
+- `title`
+- `content`
+
+WordPress sẽ không tự động search vào `custom field`
+
+Trong trường hợp này, khi dùng search `math`, tức là `search` 1 `program`.
+Ta chỉ muốn `search` theo `title`. Không muốn `search` theo `content`.
+
+Do đó, ta có thể làm như sau:
+
+- Chỉnh sửa logic mặc định của `WordPress` (khó)
+- Bỏ trường `content` và thay thế nó bằng 1 trường `custom field` chứa nội dung.
+  Như vậy, nội dung vẫn tồn tại nhưng WordPress sẽ không search vào.
+
+Các bước thực hiện:
+
+- Vào trang `admin`, mục `custom field`
+- Tạo 1 `field group` mới và đặt tên `Main Body Content`
+- Tạo 1 `field` mới với cùng tên gọi
+- `Field type`: chọn **`Wysiwyg Editor`**
+- Only show this field group only if `Post Type` `is equal to` `program`
+- `Position`: chọn **`High`**, như vậy `custom field` này sẽ xuất hiện ngay
+  sau khung nhập `title`.
+
+Lúc này khi vào `edit` 1 `program`, ta sẽ thấy xuất hiện thêm 1 trường khác
+để nhập nội dung bên cạnh trường mặc định.
+
+Lúc này, ta cần ẩn `editor` mặc định của WordPress
+
+- Quay lại trang định nghĩa `post type` mới, `university-post-type.php`
+- Ở thuộc tính `supports`, bỏ phần tử `editor`
+
+Khi truy cập đến `single-program`, ta tiến hành thay thế `the_content()` bởi
+`the_field('main_body_content')
