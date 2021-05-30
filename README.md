@@ -1408,3 +1408,8 @@ Tại hàm `universityRegisterSearch`, ta thêm code để tạo route mới và
       tương ứng khi `user` gọi đến `route` này
 
 Lúc này, khi ta truy cập đến `url`: `http://fictional-university.local/wp-json/university/v1/search` sẽ thấY được dữ liệu tương ứng được trả về từ hàm `callback` phía trên.
+
+#### Create Our Own Raw JSON Data
+
+Chúng ta chỉ cần trả về dữ liệu `PHP`, `WordPress` sẽ tự động chuyển đổi sang `JSON`
+tương ứng.
