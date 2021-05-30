@@ -1559,3 +1559,7 @@ Lúc này, code sẽ như sau:
       return $results;
   }
 ```
+
+## 16 Combining Frontend && Backend
+
+### 16.1. Updating Front-end JS to use new API URL

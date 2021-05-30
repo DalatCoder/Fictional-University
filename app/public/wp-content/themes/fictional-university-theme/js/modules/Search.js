@@ -97,43 +97,102 @@ class Search {
 
   getResults() {
     const keyword = this.searchInput.val();
+    const namespace = "university";
+    const version = "v1";
+    const route = "search";
 
-    const postAPIUrl = `${universityData.root_url}/wp-json/wp/v2/posts?search=${keyword}`;
-    const pageAPIUrl = `${universityData.root_url}/wp-json/wp/v2/pages?search=${keyword}`;
+    const apiURL = `${universityData.root_url}/wp-json/${namespace}/${version}/${route}?term=${keyword}`;
 
-    $.when($.getJSON(postAPIUrl), $.getJSON(pageAPIUrl)).then(
-      (posts, pages) => {
-        const combineResults = posts[0].concat(pages[0]);
+    $.getJSON(apiURL, (results) => {
+      this.resultsDiv.html(`
+        <div class="row">
+          <div class="one-third">
+            <h2 class="search-overlay__section-title">General Information</h2>
+            ${
+              results.generalInfo.length
+                ? `
+                  <ul class="link-list min-list">
+                    ${results.generalInfo
+                      .map((result) => {
+                        const title = result.title;
+                        const link = result.permalink;
+                        const postType = result.postType;
+                        const authorName = result.authorName;
 
-        this.resultsDiv.html(`
-        <h2 class="search-overlay__section-title">General Information</h2>
-        ${
-          combineResults.length > 0
-            ? `
-        <ul class="link-list min-list">
-          ${combineResults
-            .map((post) => {
-              const authorName = post.authorName;
-              const authorNameString = authorName ? `by ${authorName}` : "";
-              return `<li><a href="${post.link}">${post.title.rendered}</a> ${authorNameString}</li>`;
-            })
-            .join("")}
-        </ul>
-        `
-            : `
-            <p>No general information matches that search.</p>
-        `
-        }
+                        const authorNameString =
+                          postType === "post" ? `by ${authorName}` : "";
+
+                        return `<li><a href="${link}">${title}</a> ${authorNameString}</li>`;
+                      })
+                      .join("")}
+                  </ul>
+              `
+                : `
+                  <p>No general information matches that search.</p>
+                `
+            }      
+          </div>
+
+          <div class="one-third">
+            <h2 class="search-overlay__section-title">Programs</h2>
+            ${
+              results.programs.length
+                ? `
+                  <ul class="link-list min-list">
+                    ${results.programs
+                      .map((result) => {
+                        const title = result.title;
+                        const link = result.permalink;
+
+                        return `<li><a href="${link}">${title}</a></li>`;
+                      })
+                      .join("")}
+                  </ul>
+              `
+                : `
+                  <p>
+                    No programs match that search.
+                    <a href="${universityData.root_url}/programs">View all programs</a>
+                  </p>
+                `
+            }      
+
+            <h2 class="search-overlay__section-title">Professors</h2>
+
+          </div>
+
+          <div class="one-third">
+            <h2 class="search-overlay__section-title">Campuses</h2>
+            ${
+              results.campuses.length
+                ? `
+                  <ul class="link-list min-list">
+                    ${results.campuses
+                      .map((result) => {
+                        const title = result.title;
+                        const link = result.permalink;
+
+                        return `<li><a href="${link}">${title}</a></li>`;
+                      })
+                      .join("")}
+                  </ul>
+              `
+                : `
+                  <p>
+                    No campuses match that search.
+                    <a href="${universityData.root_url}/campuses">View all campuses</a>
+                  </p>
+                `
+            }      
+
+            <h2 class="search-overlay__section-title">Events</h2>
+
+          </div>
+        </div> 
       `);
 
-        this.isSpinnerVisible = false;
-      },
-      () => {
-        this.resultsDiv.html(`
-        <p>Unexpected Error: Please try again!</p>
-        `);
-      }
-    );
+      this.isSpinnerVisible = false;
+    });
   }
 
   addSearchHTML() {

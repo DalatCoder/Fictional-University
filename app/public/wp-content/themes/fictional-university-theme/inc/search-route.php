@@ -37,7 +37,7 @@ function universitySearchResults($data)
             case 'professor':
                 array_push($results['professors'], [
                     'title' => get_the_title(),
-                    'permalink' => get_the_permalink()
+                    'permalink' => get_the_permalink(),
                 ]);
                 break;
 
@@ -65,7 +65,9 @@ function universitySearchResults($data)
             default:
                 array_push($results['generalInfo'], [
                     'title' => get_the_title(),
-                    'permalink' => get_the_permalink()
+                    'permalink' => get_the_permalink(),
+                    'postType' => $postType,
+                    'authorName' => get_the_author()
                 ]);
                 break;
         }
