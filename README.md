@@ -1305,3 +1305,37 @@ setTimeout(() => {
   this.searchInput.focus();
 }, 301);
 ```
+
+## 15. Customizing REST API
+
+### 15.1. Customize the JSON data that WP Outputs
+
+Thêm 1 `custom field` vào bộ `REST API` trả về từ `WordPress`
+
+Trong lần này, ta thử thêm trường `author_name` vào dữ liệu phản hồi từ `wp-json/wp/v2/posts`
+
+Ta sẽ làm điều đó trong file `functions.php`
+
+Khai báo hàm `university_custom_rest` để thêm mới 1 `field`, và gắn vào `hook`
+`reset_api_init`
+
+Trong hàm này, ta tiến hành 1 số việc như sau:
+
+- `post`: Thay đổi `response` của type `post` (Blog post)
+- `authorName`: Tên của `field` ta vừa thêm vào `response`
+- Dữ liệu của `field` này sẽ là kết quả trả về từ hàm `get_callback`
+- `get_callback`: Truyền hàm để trả dữ liệu, trong trường hợp này, ta dùng `anonymous function`, hàm này trả về kết quả là tên tác giả của bài `post`
+
+```php
+  // Customize REST API
+  function university_custom_rest()
+  {
+      register_rest_field('post', 'authorName', [
+          'get_callback' => function () {
+              return get_the_author();
+          }
+      ]);
+  }
+
+  add_action('rest_api_init', 'university_custom_rest');
+```

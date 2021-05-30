@@ -112,10 +112,11 @@ class Search {
             ? `
         <ul class="link-list min-list">
           ${combineResults
-            .map(
-              (post) =>
-                `<li><a href="${post.link}">${post.title.rendered}</a></li>`
-            )
+            .map((post) => {
+              const authorName = post.authorName;
+              const authorNameString = authorName ? `by ${authorName}` : "";
+              return `<li><a href="${post.link}">${post.title.rendered}</a> ${authorNameString}</li>`;
+            })
             .join("")}
         </ul>
         `
