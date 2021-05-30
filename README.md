@@ -1339,3 +1339,72 @@ Trong hàm này, ta tiến hành 1 số việc như sau:
 
   add_action('rest_api_init', 'university_custom_rest');
 ```
+
+### 15.2. Create new REST API Route (URL)
+
+Một số `custom post type` sẽ không có `REST API` mặc định. Để thêm vào, ta
+có thể làm như sau:
+
+- Mở file `university-post-type.php`
+- Tại dòng `code` khai báo `post type` mới, ta thêm vào thuộc tính
+  `show_in_rest` và gán giá trị `true`
+
+Vấn đề cần giải quyết, khi mở khung `search` và thêm từ khoá `biology`, ta muốn
+trả về kết quả gồm
+
+- Tên `program`
+- Liên kết đến `program`
+- Danh sách `professor` dạy `biology`
+- Danh sách `campus` nơi mà `biology` được dạy
+- Danh sách các `event` sắp tới có liên quan đến `biology`
+
+Tuy nhiên, `logic search` của `WordPress` không được `nâng cao` như vậy. Chính vì lý
+do đó, chúng ta muốn tự `build` 1 hệ thống `search` theo ý mình.
+
+`Logic search` của `WordPress` chỉ tiến hành tìm kiếm với các `field` mặc định
+như `title` hoặc `content`. WordPress sẽ không tự động search vào `custom field` hoặc
+các `related_field`.
+
+#### 4 Reaons Why We Are Creating Our Own New REST API URL
+
+1. Custom search logic
+2. Respond with less JSON data (load faster for visitors)
+3. Send only 1 getJSON request instead of `6` in our JS
+4. Perfect exercise for sharpening PHP skills
+
+#### Các bước để tạo 1 custom REST API route
+
+- Mở file `functions` và code tại đây, tuy nhiên do code khá nhiều, để dễ tổ chức
+  và quản lý, ta tiến hành tạo 1 folder và 1 file mới chứa logic search.
+  Sau đó dùng `require` để thêm `file` mới này vào `functions.php`
+
+Tại file mới tên `search-route.php`, ta tiến hành làm 1 số công việc sau:
+
+- `add_action`: Thêm 1 action mới
+  - `hook`: `rest_api_init`
+  - `function`: `universityRegisterSearch`
+
+Tại hàm `universityRegisterSearch`, ta thêm code để tạo route mới và `logic search`
+
+- `register_rest_route`:
+
+  - args1: `namespace`:
+    Nhìn vào `api route` mặc định: `http://fictional-university.local/wp-json/wp/v2/professor`,
+
+    lúc này `wp` chính là `namespace` mặc định của `WordPress`.
+    Ta không muốn dùng `namespace` này mà sẽ định nghĩa 1 `namespace` mới, tuy nhiên,
+    `namespace` mới nên lưu ý đặt tên để không trùng với `namespace` của các `plugin`.
+    Bên cạnh đó, chúng ta có thể thêm vào `v1` để xác định phiên bản hiện tại của `api`.
+    Nếu có thay đổi lớn, chỉ cần chuyển lên `v2`.
+
+  - args2: `route`:
+    Nhìn vào `api route` mặc định, `professor` chính là `route`, `route` là phần
+    cuối cùng của `url`
+
+  - args3: `array`:
+    - `methods`: `CRUD Operation`: ta có thể viết trực tiếp `GET` vào. Hoặc cách
+      tối ưu hơn là `WP_REST_Server::READABLE`
+    - `callback`: Truyền vào 1 hàm, hàm này sẽ chứa logic search và trả về dữ liệu
+      tương ứng khi `user` gọi đến `route` này
+
+Lúc này, khi ta truy cập đến `url`: `http://fictional-university.local/wp-json/university/v1/search` sẽ thấY được dữ liệu tương ứng được trả về từ hàm `callback` phía trên.
