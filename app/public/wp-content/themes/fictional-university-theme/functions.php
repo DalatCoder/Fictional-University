@@ -135,3 +135,38 @@ add_filter('acf/fields/google_map/api', 'universityMapKey');
         </div>
     </div>
 <?php } ?>
+
+<?php
+
+// Redirect subscriber accounts out of admin and onto homepage
+add_action('admin_init', 'redirectSubsToFrontend');
+
+function redirectSubsToFrontend()
+{
+    if (!is_user_logged_in()) return;
+
+    $user = wp_get_current_user();
+    $numOfRoles = count($user->roles);
+    $role = $user->roles[0];
+
+    if ($numOfRoles == 1 && $role == 'subscriber') {
+        wp_redirect(site_url('/'));
+        exit;
+    }
+}
+
+// Remove top admin bar for subscriber member
+add_action('wp_loaded', 'noSubsAdminBar');
+
+function noSubsAdminBar()
+{
+    if (!is_user_logged_in()) return;
+
+    $user = wp_get_current_user();
+    $numOfRoles = count($user->roles);
+    $role = $user->roles[0];
+
+    if ($numOfRoles == 1 && $role == 'subscriber') {
+        show_admin_bar(false);
+    }
+}

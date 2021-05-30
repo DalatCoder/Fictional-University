@@ -1689,3 +1689,76 @@ Khi cài đặt `plugin` `member`, 1 `user` có thể có 1 hoặc nhiều `role
 Điều nay giúp ta có thể chia nhỏ `role` và các quyền, phân các `role` thật chi
 tiết, cụ thể. Khi tạo tài khoản nhân viên mới, chúng ta chỉ cần kết hợp các `role`
 cần thiết lại là xong.
+
+### Open registration
+
+Tài khoản mới sẽ được gán `role` `subscriber`
+
+Vào `admin`, `setting`, tìm đến mục `membership`, `tick` tại đây để cho phép `user`
+tạo tài khoản mới.
+
+Truy cập đến địa chỉ `wp-signup.php` để mở form tạo tài khoản.
+
+### Hiển thị `header` tương ứng với người dùng đăng nhập hệ thống
+
+Khi người dùng đăng nhập vào hệ thống, ta có thể tuỳ biến trang web để phù hợp.
+
+Một số hàm tiện ích như:
+
+- `is_user_logged_in()`: Kiểm tra xem người dùng có đang đăng nhập hay không
+- `get_current_user_id()`: Lấy `ID` của người dùng đăng nhập
+- `get_avatar(get_current_user_id(), 60)`: Lấy `gravatar` của người dùng đăng nhập
+  với kích thước `60px`
+- `wp_logout_url()`: Lấy liên kết để đăng xuất tài khoản người dùng
+
+### Chuyển hướng người dùng mới về trang `home` thay vì trang `dashboard`
+
+Mặc định khi `login`, người dùng mới sẽ vào trang `admin` và xem `dashboard`.
+
+Để thay đổi hành vi mặc định này, ta cần làm 1 số việc sau. Cụ thể, ta sẽ chuyển
+hướng người dùng đăng nhập về trang `home`
+
+- Mở file `functions.php`
+- `Hook` vào `event` `admin_init` và thêm đoạn code sau. Nếu `user` chỉ có duy nhất
+  1 `role`, và `role` này là `subscriber` thì không cho phép họ vào trang `admin`.
+
+  ```php
+    add_action('admin_init', 'redirectSubsToFrontend');
+
+    function redirectSubsToFrontend()
+    {
+        $user = wp_get_current_user();
+        $numOfRoles = count($user->roles);
+        $role = $user->roles[0];
+
+        if ($numOfRoles == 1 && $role == 'subscriber') {
+            wp_redirect(site_url('/'));
+            exit;
+        }
+    }
+  ```
+
+### Ẩn thanh `admin bar` ở giao diện `frontend` với người dùng `subscriber`
+
+Khi đăng nhập vào wordpress, sẽ có 1 thanh `admin` hiển thị ở trên đầu giao diện,
+ta muốn ẩn thanh này với người dùng phổ thông.
+
+Các bước thực hiện như sau:
+
+- Mở file `functions.php`
+- `Hook` vào `event` `wp_loaded` và thêm đoạn code sau:
+
+  ```php
+      add_action('wp_loaded', 'noSubsAdminBar');
+
+      function noSubsAdminBar()
+      {
+          $user = wp_get_current_user();
+          $numOfRoles = count($user->roles);
+          $role = $user->roles[0];
+
+          if ($numOfRoles == 1 && $role == 'subscriber') {
+              show_admin_bar(false);
+          }
+      }
+  ```
