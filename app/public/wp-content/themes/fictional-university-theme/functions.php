@@ -112,7 +112,11 @@ add_filter('acf/fields/google_map/api', 'universityMapKey');
 {
     $title = $args['title'];
     $subtitle = $args['subtitle'];
-    $photo = $args['photo'];
+
+    $photo = '';
+    if (isset($args['photo'])) {
+        $photo = $args['photo'];
+    }
 
     // Default values
 
