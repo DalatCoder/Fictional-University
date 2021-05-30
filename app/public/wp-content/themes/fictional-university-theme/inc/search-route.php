@@ -10,10 +10,14 @@ function universityRegisterSearch()
     ]);
 }
 
-function universitySearchResults()
+function universitySearchResults($data)
 {
+    $clientKeyword = $data['term'];
+    $clientKeyword = sanitize_text_field($clientKeyword);
+
     $professors = new WP_Query([
-        'post_type' => 'professor'
+        'post_type' => 'professor',
+        's' => $clientKeyword
     ]);
 
     $professorResults = [];

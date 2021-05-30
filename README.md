@@ -1440,3 +1440,46 @@ mỗi đối tượng là thông tin về:
       return $professorResults;
   }
 ```
+
+#### WP_Query and Keyword Searches
+
+Để tìm kiếm, ta cần phải có `keyword` được truyền lên từ `client`, để làm được
+điều đó, ta cần truyền thêm tham số vào đường dẫn `url`.
+
+Tham số này ta đặt tên `term`, là từ khoá để `search`
+
+Tham số này được `WordPress` tự động truyền vào hàm `callback`, do đó, bên trong
+hàm `callback` ta có thể dễ dàng truy cập để lấy được giá trị `term`
+
+Bên cạnh đó, để tăng bảo mật, chúng ta có thể dùng hàm `sanitize_text_field` có sẵn
+để tránh việc người dùng chèn mã độc và tham số `term`
+
+Đường dẫn `URL` có dạng: `http://fictional-university.local/wp-json/university/v1/search?term=meowsalot`
+
+Code của chúng ta sẽ như sau:
+
+```php
+  function universitySearchResults($data)
+  {
+      $clientKeyword = $data['term'];
+      $clientKeyword = sanitize_text_field($clientKeyword);
+
+      $professors = new WP_Query([
+          'post_type' => 'professor',
+          's' => $clientKeyword
+      ]);
+
+      $professorResults = [];
+
+      while ($professors->have_posts()) {
+          $professors->the_post();
+
+          array_push($professorResults, [
+              'title' => get_the_title(),
+              'permalink' => get_the_permalink()
+          ]);
+      }
+
+      return $professorResults;
+  }
+```
