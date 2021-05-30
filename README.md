@@ -1608,3 +1608,26 @@ Khi truy cập đến `single-program`, ta tiến hành thay thế `the_content(
 ```php
   <form action="<?php echo esc_url(site_url('/')); ?>">
 ```
+
+### Tạo trang `search`
+
+Vào trang `admin`, tạo trang `search`, sau đó tạo trang `page-search` để
+`custom` giao diện.
+
+### Trang hiển thị kết quả `search`
+
+Mặc định, `WordPress` dùng trang `index` để hiển thị kết quả `search`.
+
+Tuy nhiên, ta có thể tạo file `search.php` để `custom` giao diện.
+
+Ta có thể lấy được `keyword` thông qua câu lệNh
+
+```php
+  get_search_query();
+```
+
+### Bảo mật input từ người dùng
+
+```php
+ <?php $searchQuery = esc_html(get_search_query()); ?>
+```
