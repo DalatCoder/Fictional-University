@@ -43,6 +43,8 @@ class Search {
     setTimeout(() => {
       this.searchInput.focus();
     }, 301);
+
+    return false;
   }
 
   closeOverlay() {

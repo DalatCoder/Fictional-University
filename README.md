@@ -1600,3 +1600,11 @@ Lúc này, ta cần ẩn `editor` mặc định của WordPress
 
 Khi truy cập đến `single-program`, ta tiến hành thay thế `the_content()` bởi
 `the_field('main_body_content')
+
+## 17. Non-JS Fallback Traditional Search
+
+### Tăng bảo mật khi `echo` 1 `url`
+
+```php
+  <form action="<?php echo esc_url(site_url('/')); ?>">
+```
