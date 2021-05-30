@@ -40,9 +40,9 @@ function university_files()
     if (strstr($_SERVER['SERVER_NAME'], 'fictional-university.local')) {
         wp_enqueue_script('university_main_js', 'http://localhost:3000/bundled.js', NULL, '1.0', true);
     } else {
-        wp_enqueue_style('university_main_style', get_theme_file_uri('/bundled-assets/styles.bc49dbb23afb98cfc0f7.css'));
-        wp_enqueue_script('university_vendor_js', get_theme_file_uri('/bundled-assets/vendors~scripts.8c97d901916ad616a264.js'), NULL, '1.0', true);
-        wp_enqueue_script('university_main_js', get_theme_file_uri('/bundled-assets/scripts.bc49dbb23afb98cfc0f7.js'), NULL, '1.0', true);
+        wp_enqueue_style('university_main_style', get_theme_file_uri('/bundled-assets/styles.2835ee98f35de5b07fe8.css'));
+        wp_enqueue_script('university_vendor_js', get_theme_file_uri('/bundled-assets/vendors~scripts.1fa169383e64a33bfd0c.js'), NULL, '1.0', true);
+        wp_enqueue_script('university_main_js', get_theme_file_uri('/bundled-assets/scripts.2835ee98f35de5b07fe8.js'), NULL, '1.0', true);
     }
 
     wp_localize_script('university_main_js', 'universityData', [
@@ -169,4 +169,37 @@ function noSubsAdminBar()
     if ($numOfRoles == 1 && $role == 'subscriber') {
         show_admin_bar(false);
     }
+}
+
+// Customize login screen
+add_filter('login_headerurl', 'ourHeaderURL');
+
+function ourHeaderURL()
+{
+    return esc_url(site_url('/'));
+}
+
+add_action('login_enqueue_scripts', 'ourLoginCSS');
+
+function ourLoginCSS()
+{
+    wp_enqueue_style(
+        'custom_google_font',
+        '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i'
+    );
+
+    wp_enqueue_style(
+        'font_awesome',
+        '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'
+    );
+
+    wp_enqueue_style('university_main_style', get_theme_file_uri('/bundled-assets/styles.2835ee98f35de5b07fe8.css'));
+}
+
+// Change login title
+add_filter('login_headertext', 'ourLoginTitle');
+
+function ourLoginTitle()
+{
+    return get_bloginfo('name');
 }

@@ -1762,3 +1762,71 @@ Các bước thực hiện như sau:
           }
       }
   ```
+
+### Custom giao diện trang đăng nhập
+
+#### Thay đổi liên kết khi `click` vào logo WordPress
+
+Vào file `functions.php`
+
+Để sửa đổi 1 số thứ đã có sẵn, ta gọi hàm `filter`
+
+Các bước như sau:
+
+- `add_filter`: Filter thay đổi 1 số thứ đã có sẵn giá trị
+- `login_headerurl`: Hook
+- `ourHeaderURL`: Function trả về `url` của chúng ta
+
+```php
+    add_filter('login_headerurl', 'ourHeaderURL');
+
+    function ourHeaderURL()
+    {
+        return esc_url(site_url('/'));
+    }
+```
+
+#### Thay đổi logo WordPress
+
+Nếu muốn thay đổi giao diện trang `login`, ta chỉ cần viết `CSS` và ghi đè
+lên những thứ mà `WordPress` đã làm, bao gồm cả hình ảnh `logo`.
+
+Ta đã có 1 hàm để `load` `css` và `js` vào `theme`. Tuy nhiên, trang `login` lại
+không tự động `load` các file này vào.
+
+Do đó, ta cần làm các bước sau để load `css` hoặc `js` vào.
+
+Sau khi `load` thành công, `CSS` của chúng ta sẽ ghi đè lên `CSS` mặc định
+của `WordPress` và thay đổi giao diện mặc định.
+
+```php
+  add_action('login_enqueue_scripts', 'ourLoginCSS');
+
+  function ourLoginCSS()
+  {
+      if (strstr($_SERVER['SERVER_NAME'], 'fictional-university.local')) {
+          wp_enqueue_script('university_main_js', 'http://localhost:3000/bundled.js', NULL, '1.0', true);
+      } else {
+          wp_enqueue_style('university_main_style', get_theme_file_uri('/bundled-assets/styles.bc49dbb23afb98cfc0f7.css'));
+          wp_enqueue_script('university_vendor_js', get_theme_file_uri('/bundled-assets/vendors~scripts.8c97d901916ad616a264.js'), NULL, '1.0', true);
+          wp_enqueue_script('university_main_js', get_theme_file_uri('/bundled-assets/scripts.bc49dbb23afb98cfc0f7.js'), NULL, '1.0', true);
+      }
+  }
+```
+
+#### Thay đổi tên Website ở trang đăng nhập
+
+Để thay đổi tên `Website` ở trang đăng nhập, ta tiến hành chỉnh sửa 1 `filter hook` khác.
+
+Đoạn code sẽ như sau:
+
+- Trong đó, tên website sẽ được lấy tự động từ CSDL
+
+```php
+  add_filter('login_headertext', 'ourLoginTitle');
+
+  function ourLoginTitle()
+  {
+      return get_bloginfo('name');
+  }
+```
