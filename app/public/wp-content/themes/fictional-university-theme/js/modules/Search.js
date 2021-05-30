@@ -158,6 +158,36 @@ class Search {
             }      
 
             <h2 class="search-overlay__section-title">Professors</h2>
+            ${
+              results.professors.length
+                ? `
+                  <ul class="professor-cards">
+                    ${results.professors
+                      .map((item) => {
+                        const title = item.title;
+                        const link = item.permalink;
+                        const photoLink = item.image;
+
+                        return `
+                          <li class="professor-card__list-item">
+                              <a class="professor-card" href="${link}">
+                                  <img class="professor-card__image" src="${photoLink}">
+                                  <span class="professor-card__name">
+                                      ${title}
+                                  </span>
+                              </a>
+                          </li>
+                        `;
+                      })
+                      .join("")}
+                  </ul>
+              `
+                : `
+                  <p>
+                    No professors match that search.
+                  </p>
+                `
+            }      
 
           </div>
 
@@ -186,6 +216,50 @@ class Search {
             }      
 
             <h2 class="search-overlay__section-title">Events</h2>
+            ${
+              results.events.length
+                ? `
+                  <ul class="professor-cards">
+                    ${results.events
+                      .map((item) => {
+                        const title = item.title;
+                        const link = item.permalink;
+                        const month = item.month;
+                        const day = item.day;
+                        const description = item.description;
+
+                        return `
+                          <div class="event-summary">
+                              <a class="event-summary__date t-center" href="${link}">
+                                  <span class="event-summary__month">
+                                    ${month}
+                                  </span>
+                                  <span class="event-summary__day">
+                                    ${day}
+                                  </span>
+                              </a>
+                              <div class="event-summary__content">
+                                  <h5 class="event-summary__title headline headline--tiny">
+                                      <a href="${link}">${title}</a>
+                                  </h5>
+                                  <p>
+                                      ${description}
+                                      <a href="${link}" class="nu gray">Learn more</a>
+                                  </p>
+                              </div>
+                          </div>
+                        `;
+                      })
+                      .join("")}
+                  </ul>
+              `
+                : `
+                  <p>
+                    No events match that search.
+                    <a href="${universityData.root_url}/events">View all events</a>
+                  </p>
+                `
+            }      
 
           </div>
         </div> 

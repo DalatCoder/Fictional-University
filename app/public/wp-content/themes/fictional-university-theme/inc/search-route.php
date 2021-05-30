@@ -38,6 +38,8 @@ function universitySearchResults($data)
                 array_push($results['professors'], [
                     'title' => get_the_title(),
                     'permalink' => get_the_permalink(),
+                    // 0 mean current post
+                    'image' => get_the_post_thumbnail_url(0, 'professorLandscape')
                 ]);
                 break;
 
@@ -56,9 +58,20 @@ function universitySearchResults($data)
                 break;
 
             case 'event':
+                $eventDate = new DateTime(get_field('event_date'));
+                $description = null;
+
+                if (has_excerpt())
+                    $description = get_the_excerpt();
+                else
+                    $description = wp_trim_words(get_the_content(), 18);
+
                 array_push($results['events'], [
                     'title' => get_the_title(),
-                    'permalink' => get_the_permalink()
+                    'permalink' => get_the_permalink(),
+                    'month' => $eventDate->format('M'),
+                    'day' => $eventDate->format('d'),
+                    'description' => $description
                 ]);
                 break;
 
