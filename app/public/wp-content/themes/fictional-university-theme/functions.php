@@ -6,6 +6,7 @@ require get_theme_file_path('/inc/search-route.php');
 function university_custom_rest()
 {
     register_rest_field('post', 'authorName', [
+        'permission_callback' => true,
         'get_callback' => function () {
             return get_the_author();
         }
@@ -105,35 +106,23 @@ add_filter('acf/fields/google_map/api', 'universityMapKey');
 
 ?>
 
-<?php // Reusable Functions 
-?>
-
 <?php function pageBanner($args = [])
 {
-    $title = $args['title'];
-    $subtitle = $args['subtitle'];
+    $title = get_the_title();
+    $subtitle = get_field('page_banner_subtitle');
+    $photo = get_theme_file_uri('/images/ocean.jpg');
 
-    $photo = '';
-    if (isset($args['photo'])) {
+    if (isset($args['title']))
+        $title = $args['title'];
+
+    if (isset($args['subtitle']))
+        $subtitle = $args['subtitle'];
+
+    if (isset($args['photo']))
         $photo = $args['photo'];
-    }
-
-    // Default values
-
-    if (!$title)
-        $title = get_the_title();
-
-
-    if (!$subtitle)
-        $subtitle = get_field('page_banner_subtitle');
-
-    if (!$photo) {
+    else 
         if (get_field('page_banner_background_image') && !is_archive() && !is_home())
-            $photo = get_field('page_banner_background_image')['sizes']['pageBanner'];
-        else
-            $photo = get_theme_file_uri('/images/ocean.jpg');
-    }
-
+        $photo = get_field('page_banner_background_image')['sizes']['pageBanner'];
 ?>
 
     <div class="page-banner">
