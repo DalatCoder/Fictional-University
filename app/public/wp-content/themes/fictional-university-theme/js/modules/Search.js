@@ -113,11 +113,11 @@ class Search {
                 ? `
                   <ul class="link-list min-list">
                     ${results.generalInfo
-                      .map((result) => {
-                        const title = result.title;
-                        const link = result.permalink;
-                        const postType = result.postType;
-                        const authorName = result.authorName;
+                      .map((item) => {
+                        const title = item.title;
+                        const link = item.permalink;
+                        const postType = item.postType;
+                        const authorName = item.authorName;
 
                         const authorNameString =
                           postType === "post" ? `by ${authorName}` : "";
@@ -140,9 +140,9 @@ class Search {
                 ? `
                   <ul class="link-list min-list">
                     ${results.programs
-                      .map((result) => {
-                        const title = result.title;
-                        const link = result.permalink;
+                      .map((item) => {
+                        const title = item.title;
+                        const link = item.permalink;
 
                         return `<li><a href="${link}">${title}</a></li>`;
                       })
@@ -168,9 +168,9 @@ class Search {
                 ? `
                   <ul class="link-list min-list">
                     ${results.campuses
-                      .map((result) => {
-                        const title = result.title;
-                        const link = result.permalink;
+                      .map((item) => {
+                        const title = item.title;
+                        const link = item.permalink;
 
                         return `<li><a href="${link}">${title}</a></li>`;
                       })
