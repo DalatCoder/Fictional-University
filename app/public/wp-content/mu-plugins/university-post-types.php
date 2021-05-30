@@ -3,6 +3,8 @@ function university_post_types()
 {
     // Create event post type
     register_post_type('event', [
+        'capability_type' => 'event',
+        'map_meta_cap' => true,
         'show_in_rest' => true,
         'supports' => ['title', 'editor', 'excerpt'],
         'rewrite' => ['slug' => 'events'],
@@ -52,6 +54,8 @@ function university_post_types()
 
     // Create compus post type
     register_post_type('campus', [
+        'capability_type' => 'campus',
+        'map_meta_cap' => true,
         'show_in_rest' => true,
         'supports' => ['title', 'editor', 'excerpt'],
         'rewrite' => ['slug' => 'campuses'],

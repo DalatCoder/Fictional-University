@@ -1631,3 +1631,61 @@ Ta có thể lấy được `keyword` thông qua câu lệNh
 ```php
  <?php $searchQuery = esc_html(get_search_query()); ?>
 ```
+
+## 18. User roles and permissions
+
+Một số `role` mặc định của `WordPress`
+
+- `subscriber`: Không có quyền hành gì
+- `contributor`: Có thể tạo các `post` và `page`, nhưng không có quyền `public`
+- `author`: Có thể tạo các `post` và `page`, sau đó `public` chúng. Họ có thể chỉnh
+  sửa các `post` do chính họ tạo ra.
+- `editor`: Tạo `post`, `page` và `public` chúng lên. Họ có thể sửa bài của chính
+  họ hoặc của người khác.
+- `admin`: Full quyền
+
+Đây là 1 số `role` có sẵn của WordPress, tuy nhiên ta có thể thoải mái thêm các
+`role` mới.
+
+Cách nhanh và hiệu quả là thông qua 1 plugin. Vào trang quản lý `plugin`, tìm kiếm
+`members` do `MemberPress` xuất bản.
+
+### Thêm role mới
+
+Chúng ta sẽ tiến hành thêm 1 `role` mới, đặt tên là `Event Planner`, người dùng
+thuộc về `role` này chỉ có thể tương tác với menu `Event`
+
+Vào trang `admin`, phần `member`, chọn `role` và `add new`.
+
+Tại đây, chúng ta không tìm thấy phần quản lý quyền cho các `custom type`. Bởi vì
+mặc định, các `custom post type` kế thừa từ `post` ban đầU.
+
+Do đó, để có thể quản lý quyền cho các `custom post type`, ta cần làm như sau:
+
+- Mở file `university-post-type.php`
+- Tại đoạn `code` định nghĩa `event post type`, ta tiến hành thêm thuộc tính sau:
+  Lúc này, `Event` sẽ yêu cầu được phân quyền riêng, không còn kế thừa từ `Post` nữa.
+- Thuộc tính `map_meta_cap` giúp thiết đặt 1 số thông số tự động từ `WordPress`, đặt
+  giá trị này thành `false` nếu muốn tự `custom`
+
+```php
+    register_post_type('event', [
+        'capability_type' => 'event',
+        'map_meta_cap' => true,
+    ]);
+```
+
+Ta có thể gán `role` `Event Planner` này cho `user` vừa mới được tạo, khi đăng
+nhập vào, họ chỉ có thể quản lý phần `Event`.
+
+Tuy nhiên, lúc này tài khoản `admin` không thể quản lý `event` được nữa. Do ta
+vừa đặt 1 `capability_type` mới là `event`, do đó ta cần vào tài khoản `admin`
+vào mục `event` và thêm tất cả quyền ở đây.
+
+### Một `user` có 1 hoặc nhiều `role`
+
+Khi cài đặt `plugin` `member`, 1 `user` có thể có 1 hoặc nhiều `role`.
+
+Điều nay giúp ta có thể chia nhỏ `role` và các quyền, phân các `role` thật chi
+tiết, cụ thể. Khi tạo tài khoản nhân viên mới, chúng ta chỉ cần kết hợp các `role`
+cần thiết lại là xong.
