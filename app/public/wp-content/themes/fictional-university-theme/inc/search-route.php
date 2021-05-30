@@ -12,5 +12,20 @@ function universityRegisterSearch()
 
 function universitySearchResults()
 {
-    return 'hello Hieu';
+    $professors = new WP_Query([
+        'post_type' => 'professor'
+    ]);
+
+    $professorResults = [];
+
+    while ($professors->have_posts()) {
+        $professors->the_post();
+
+        array_push($professorResults, [
+            'title' => get_the_title(),
+            'permalink' => get_the_permalink()
+        ]);
+    }
+
+    return $professorResults;
 }

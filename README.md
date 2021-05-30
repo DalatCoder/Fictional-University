@@ -1411,5 +1411,32 @@ Lúc này, khi ta truy cập đến `url`: `http://fictional-university.local/wp
 
 #### Create Our Own Raw JSON Data
 
-Chúng ta chỉ cần trả về dữ liệu `PHP`, `WordPress` sẽ tự động chuyển đổi sang `JSON`
-tương ứng.
+Chúng ta chỉ cần trả về dữ liệu `PHP`, `WordPress` sẽ tự động chuyển đổi sang `JSON` tương ứng.
+
+Trong trường hợp dưới đây, chúng ta sẽ trả về 1 mảng gồm các đối tượng, với
+mỗi đối tượng là thông tin về:
+
+- `title`: Tên `professor`
+- `permalink`: Liên kết đến trang cá nhân của `professor`
+
+```php
+  function universitySearchResults()
+  {
+      $professors = new WP_Query([
+          'post_type' => 'professor'
+      ]);
+
+      $professorResults = [];
+
+      while ($professors->have_posts()) {
+          $professors->the_post();
+
+          array_push($professorResults, [
+              'title' => get_the_title(),
+              'permalink' => get_the_permalink()
+          ]);
+      }
+
+      return $professorResults;
+  }
+```
