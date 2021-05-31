@@ -2095,3 +2095,58 @@ người dùng `edit`.
     });
   }
 ```
+
+#### Create new `Note`
+
+Code tạo `note` mới sẽ trông như sau.
+
+Khi `note` mới được tạo thành công, `WordPress` sẽ phản hổi về `note` vừa tạo.
+
+Ta dựa vào đó để lấy `ID`, `title` và `content` để hiển thị lên màn hình.
+
+```js
+  createNote() {
+    const createAPIUrl = `${this.rootURL}/wp-json/wp/v2/note`;
+    const nonceCode = this.nonceCode || "";
+
+    const newNote = {
+      title: $(".new-note-title").val(),
+      content: $(".new-note-body").val(),
+      status: "publish",
+    };
+
+    $.ajax({
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader("X-WP-Nonce", nonceCode);
+      },
+      url: createAPIUrl,
+      data: newNote,
+      type: "POST",
+      success: (response) => {
+        const newNoteID = response.id;
+        const newNoteTitle = response.title.raw;
+        const newNoteContent = response.content.raw;
+
+        $(".new-note-title, .new-note-body").val("");
+        $(`
+            <li data-id="${newNoteID}">
+                <input readonly class="note-title-field" type="text" value="${newNoteTitle}">
+                <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span>
+                <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</span>
+                <textarea readonly class="note-body-field" name="" id="" cols="30" rows="10">${newNoteContent}</textarea>
+                <span class="update-note btn btn--blue btn--small"><i class="fa fa-arrow-right" aria-hidden="true"></i> Save</span>
+            </li>
+        `)
+          .prependTo("#my-notes")
+          .hide()
+          .slideDown();
+
+        console.log(response);
+      },
+      error: (response) => {
+        console.log("sorry");
+        console.log(response);
+      },
+    });
+  }
+```

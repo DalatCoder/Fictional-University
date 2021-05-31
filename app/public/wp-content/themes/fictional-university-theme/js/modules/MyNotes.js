@@ -10,12 +10,58 @@ class MyNotes {
   }
 
   events() {
-    $(".delete-note").on("click", this.deleteNote.bind(this));
-    $(".edit-note").on("click", this.editNote.bind(this));
-    $(".update-note").on("click", this.updateNote.bind(this));
+    $("#my-notes").on("click", ".delete-note", this.deleteNote.bind(this));
+    $("#my-notes").on("click", ".edit-note", this.editNote.bind(this));
+    $("#my-notes").on("click", ".update-note", this.updateNote.bind(this));
+    $(".submit-note").on("click", this.createNote.bind(this));
   }
 
   // Methods will go here
+  createNote() {
+    const createAPIUrl = `${this.rootURL}/wp-json/wp/v2/note`;
+    const nonceCode = this.nonceCode || "";
+
+    const newNote = {
+      title: $(".new-note-title").val(),
+      content: $(".new-note-body").val(),
+      status: "publish",
+    };
+
+    $.ajax({
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader("X-WP-Nonce", nonceCode);
+      },
+      url: createAPIUrl,
+      data: newNote,
+      type: "POST",
+      success: (response) => {
+        const newNoteID = response.id;
+        const newNoteTitle = response.title.raw;
+        const newNoteContent = response.content.raw;
+
+        $(".new-note-title, .new-note-body").val("");
+        $(`
+            <li data-id="${newNoteID}">
+                <input readonly class="note-title-field" type="text" value="${newNoteTitle}">
+                <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span>
+                <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</span>
+                <textarea readonly class="note-body-field" name="" id="" cols="30" rows="10">${newNoteContent}</textarea>
+                <span class="update-note btn btn--blue btn--small"><i class="fa fa-arrow-right" aria-hidden="true"></i> Save</span>
+            </li>
+        `)
+          .prependTo("#my-notes")
+          .hide()
+          .slideDown();
+
+        console.log(response);
+      },
+      error: (response) => {
+        console.log("sorry");
+        console.log(response);
+      },
+    });
+  }
+
   editNote(event) {
     const thisNote = $(event.target).parents("li");
 
