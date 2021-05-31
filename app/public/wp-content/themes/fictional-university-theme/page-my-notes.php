@@ -30,10 +30,11 @@ if (!is_user_logged_in()) {
                 ?>
 
                 <li data-id="<?php the_id(); ?>">
-                    <input class="note-title-field" type="text" value="<?php echo $title; ?>">
+                    <input readonly class="note-title-field" type="text" value="<?php echo $title; ?>">
                     <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span>
                     <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</span>
-                    <textarea class="note-body-field" name="" id="" cols="30" rows="10"><?php echo $content; ?></textarea>
+                    <textarea readonly class="note-body-field" name="" id="" cols="30" rows="10"><?php echo $content; ?></textarea>
+                    <span class="update-note btn btn--blue btn--small"><i class="fa fa-arrow-right" aria-hidden="true"></i> Save</span>
                 </li>
 
             <?php endwhile; ?>

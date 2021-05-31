@@ -2055,3 +2055,9 @@ xoá
     });
   }
 ```
+
+#### Chỉnh sửa `note` sử dụng REST API
+
+Ta mặc định thêm thuộc tính `read-only` vào trường `input` và `textarea`. Chỉ
+khi nào người dùng nhấn `edit` thì ta mới bỏ thuộc tính này và cho phép
+người dùng `edit`.
