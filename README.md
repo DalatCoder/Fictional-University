@@ -2061,3 +2061,37 @@ xoá
 Ta mặc định thêm thuộc tính `read-only` vào trường `input` và `textarea`. Chỉ
 khi nào người dùng nhấn `edit` thì ta mới bỏ thuộc tính này và cho phép
 người dùng `edit`.
+
+Để chỉnh sửa 1 `note`, ta chỉ cần gửi `ajax` dữ liệu mới, kèm theo `POST Request`
+
+```php
+  updateNote(event) {
+    const thisNote = $(event.target).parents("li");
+
+    const noteID = thisNote.data("id");
+    const updateAPIUrl = `${this.rootURL}/wp-json/wp/v2/note/${noteID}`;
+    const nonceCode = this.nonceCode || "";
+
+    const updatedPost = {
+      title: thisNote.find(".note-title-field").val(),
+      content: thisNote.find(".note-body-field").val(),
+    };
+
+    $.ajax({
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader("X-WP-Nonce", nonceCode);
+      },
+      url: updateAPIUrl,
+      data: updatedPost,
+      type: "POST",
+      success: (response) => {
+        this.makeNoteReadonly(thisNote);
+        console.log(response);
+      },
+      error: (response) => {
+        console.log("sorry");
+        console.log(response);
+      },
+    });
+  }
+```
