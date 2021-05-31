@@ -2226,3 +2226,50 @@ const newNote = {
               return $data;
           }
       ```
+
+#### Vấn đề `private: ` xuất hiện trước title của mỗi `note`
+
+Sau khi mặc định `status` của `note` về `private`, lúc này, khi mỗi lần vào
+trang `my-notes`. Trước mỗi `note` đều có dòng chữ `Private: `. Ta sẽ tìm cách
+để bỏ dòng chữ này.
+
+```php
+  $title = str_replace("Private: ", "", esc_attr(get_the_title()));
+```
+
+#### Giới hạn quyền cho `subscriber`
+
+Bởi vì mặc định `note` được chuyển sang trạng thái `private`. Do đó, chúng ta
+không cần 2 quyền sau nữa:
+
+- `Edit published notes`
+- `Delete published notes`
+
+Với các `role` chúng ta không tin tưởng, chỉ đặt quyền ở mức tối thiểu.
+
+Mặc định, `user` vẫn có thể `post` 1 số đoạn `HTML` đơn giản. Tuy nhiên, ta muốn
+giới hạn điều này, cắt bỏ phần `HTML` mà người dùng có thể thêm vào trước khi
+lưu vào `CSDL`
+
+Mở file `functions.php`, tại `hook` `wp_insert_post_data`, thêm đoạn code sau:
+
+```php
+    add_filter('wp_insert_post_data', 'makeNotePrivate');
+
+    function makeNotePrivate($data)
+    {
+        $postType = $data['post_type'];
+        $postStatus = $data['post_status'];
+
+        if ($postType == 'note') {
+            $data['post_content'] = sanitize_textarea_field($data['post_content']);
+            $data['post_title'] = sanitize_text_field($data['post_title']);
+        }
+
+        if ($postType == 'note' && $postStatus != 'trash') {
+            $data['post_status'] = 'private';
+        }
+
+        return $data;
+    }
+```

@@ -33,7 +33,7 @@ if (!is_user_logged_in()) {
                 <?php $userNotes->the_post(); ?>
 
                 <?php
-                $title = esc_attr(get_the_title());
+                $title = str_replace("Private: ", "", esc_attr(get_the_title()));
                 $content = esc_attr(wp_strip_all_tags(get_the_content()));
                 ?>
 
