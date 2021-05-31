@@ -13,8 +13,10 @@ class MyNotes {
   }
 
   // Methods will go here
-  deleteNote() {
-    const noteID = 104;
+  deleteNote(event) {
+    const thisNote = $(event.target).parents("li");
+
+    const noteID = thisNote.data("id");
     const deleteAPIURL = `${this.rootURL}/wp-json/wp/v2/note/${noteID}`;
     const nonceCode = this.nonceCode || "";
 
@@ -25,6 +27,7 @@ class MyNotes {
       url: deleteAPIURL,
       type: "DELETE",
       success: (response) => {
+        thisNote.slideUp();
         console.log("success");
         console.log(response);
       },

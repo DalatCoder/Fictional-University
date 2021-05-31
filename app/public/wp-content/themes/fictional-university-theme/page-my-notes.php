@@ -29,7 +29,7 @@ if (!is_user_logged_in()) {
                 $content = esc_attr(wp_strip_all_tags(get_the_content()));
                 ?>
 
-                <li>
+                <li data-id="<?php the_id(); ?>">
                     <input class="note-title-field" type="text" value="<?php echo $title; ?>">
                     <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span>
                     <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</span>

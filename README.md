@@ -2020,3 +2020,38 @@ Lúc này, đoạn code thực hiện `ajax` xoá `note` phía client sẽ như 
   }
 
 ```
+
+Tuy nhiên, lúc này ta chỉ xoá được `note` có `ID` gán cứng bằng `104`.
+
+Để linh hoạt hơn, tại file `page-my-note.php`, ta tiến hành thêm thuộc tính
+`data-id` và nhúng `ID` của `note` tương ứng vào đây.
+
+Ở phía `client`, ta sẽ chọn `ID` này và truyền vào `URL` tương ứng để thực hiện
+xoá
+
+```js
+  deleteNote(event) {
+    const thisNote = $(event.target).parents("li");
+
+    const noteID = thisNote.data("id");
+    const deleteAPIURL = `${this.rootURL}/wp-json/wp/v2/note/${noteID}`;
+    const nonceCode = this.nonceCode || "";
+
+    $.ajax({
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader("X-WP-Nonce", nonceCode);
+      },
+      url: deleteAPIURL,
+      type: "DELETE",
+      success: (response) => {
+        thisNote.slideUp();
+        console.log("success");
+        console.log(response);
+      },
+      error: (response) => {
+        console.log("sorry");
+        console.log(response);
+      },
+    });
+  }
+```
