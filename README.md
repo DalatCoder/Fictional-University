@@ -1953,3 +1953,70 @@ Sau đó, ta có thể lấy `note` từ `custom query` này và hiển thị l�
 
   <?php wp_reset_postdata(); ?>
 ```
+
+#### Xoá `note` sử dụng REST API
+
+`REST API` hiển thị danh sách toàn bộ `note`: `http://fictional-university.local/wp-json/wp/v2/note`
+
+Để xoá 1 `note`, ta chỉ cần gửi `DELETE Request` đến `URL`: `http://fictional-university.local/wp-json/wp/v2/note/{id}`
+
+Tuy nhiên, để có thể xoá được, ta cần phải xác thực `note` này thuộc về chúng ta.
+
+Để làm được điều đó, ta cần 1 mã `nonce`
+
+**`nonce`**:
+
+- Number used once
+- Number once
+
+Khi người dùng đăng nhập thành công vào hệ thống, `WordPress` sẽ tự động khởi
+tạo 1 mã `nonce` tương ứng với `session` của người dùng vừa đăng nhập.
+
+Khi muốn xoá `note`, người dùng cần gửi kèm theo mã này để xác minh danh tính.
+
+##### Tạo mã `once` và trả về client khi người dùng đăng nhập vào hệ thống
+
+Mở file `functions.php` và thêm đoạn code để khởi tạo mã `nonce`
+
+Như vậy, khi người dùng đăng nhập thành công vào trang web, đối tượng `global`
+tên `universityData` ở phía `client` sẽ chứa thông tin về:
+
+- `root_url`: Địa chỉ `root` của Website, dùng khi `send ajax`
+- `nonce`: Mã `once`, mã xác thực người dùng
+
+```php
+function university_files()
+{
+    wp_localize_script('university_main_js', 'universityData', [
+        'root_url' => get_site_url(),
+        'nonce' => wp_create_nonce('wp_rest')
+    ]);
+}
+```
+
+Lúc này, đoạn code thực hiện `ajax` xoá `note` phía client sẽ như sau:
+
+```php
+  deleteNote() {
+    const noteID = 104;
+    const deleteAPIURL = `${this.rootURL}/wp-json/wp/v2/note/${noteID}`;
+    const nonceCode = universityData.nonce;
+
+    $.ajax({
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader("X-WP-Nonce", nonceCode);
+      },
+      url: deleteAPIURL,
+      type: "DELETE",
+      success: (response) => {
+        console.log("success");
+        console.log(response);
+      },
+      error: (response) => {
+        console.log("sorry");
+        console.log(response);
+      },
+    });
+  }
+
+```
