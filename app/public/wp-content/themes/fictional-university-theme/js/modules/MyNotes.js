@@ -4,6 +4,7 @@ class MyNotes {
   constructor() {
     this.rootURL = universityData.root_url;
     this.nonceCode = universityData.nonce;
+    this.editable = false;
 
     this.events();
   }
@@ -17,12 +18,36 @@ class MyNotes {
   editNote(event) {
     const thisNote = $(event.target).parents("li");
 
+    this.editable = !this.editable;
+
+    if (this.editable) this.makeNoteEditable(thisNote);
+    else this.makeNoteReadonly(thisNote);
+  }
+
+  makeNoteEditable(thisNote) {
+    thisNote.find(".edit-note").html(`
+      <i class="fa fa-times" aria-hidden="true"></i> Cancel
+    `);
+
     thisNote
       .find(".note-title-field, .note-body-field")
       .removeAttr("readonly")
       .addClass("note-active-field");
 
     thisNote.find(".update-note").addClass("update-note--visible");
+  }
+
+  makeNoteReadonly(thisNote) {
+    thisNote.find(".edit-note").html(`
+      <i class="fa fa-pencil" aria-hidden="true"></i> Edit
+    `);
+
+    thisNote
+      .find(".note-title-field, .note-body-field")
+      .attr("readonly", "readonly")
+      .removeClass("note-active-field");
+
+    thisNote.find(".update-note").removeClass("update-note--visible");
   }
 
   deleteNote(event) {
