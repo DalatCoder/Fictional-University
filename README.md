@@ -1830,3 +1830,126 @@ của `WordPress` và thay đổi giao diện mặc định.
       return get_bloginfo('name');
   }
 ```
+
+## 19. User Generated Content
+
+### 19.1. My Notes (CRUD Exercise)
+
+Vấn đề: Sinh viên vào lớp học có thể tạo các `note` để ghi chú thông tin về
+môn học.
+
+Sinh viên có thể tạo mới, xem, chỉnh sửa, xoá.
+
+#### Tạo trang mới để hiển thị danh sách `notes`
+
+Vào giao diện `admin`, tạo `page` mới, đặt tên `My Notes`.
+
+#### Chỉnh sửa giao diện trang `My Notes`
+
+Tại thư mục chứa theme, tạo 1 page mới, đặt tên `page-my-notes.php`. Page này
+sẽ được tự động load khi người dùng truy cập vào `URL` '/my-notes`.
+
+#### Chỉnh aửa `header` để thêm link đến trang `my notes`
+
+Vào file `header.php`, tại đây ta tiến hành thêm 1 menu con chứa liên kết đến
+trang `My Notes`.
+
+Menu này chỉ được hiển thị khi người dùng đã đăng nhập vào hệ thống.
+
+```php
+  <?php if (is_user_logged_in()) : ?>
+      <a
+        href="<?php echo esc_url(site_url('/my-notes')); ?>"
+        class="btn btn--small btn--orange float-left push-right">
+          My Notes
+      </a>
+  <?php endif; ?>
+```
+
+#### Vấn đề người dùng không đăng nhập vẫn có thể truy cập vào `My Notes` thông qua `URL`
+
+Người dùng không đăng nhập vẫn có thể truy cập vào trang này nếu biết đường
+dẫn URL.
+
+Do đó, ở file `page-my-notes.php`, ta tiến hành thêm đoạn mã sau để ngăn người
+dùng truy cập trái phép.
+
+```php
+  <?php
+    if (!is_user_logged_in()) {
+        wp_redirect(esc_url(site_url('/')));
+        exit;
+    }
+  ?>
+```
+
+#### Tạo `post type` mới để lưu trữ thông tin `note`
+
+Tạo 1 post type mới để lưu trữ thông tin về `note`.
+
+Đoạn code sẽ như sau:
+
+Trong đó,
+
+- `show_in_rest`: Hỗ trợ `API`
+- `public`: `false`, ta không muốn người dùng `search` thông tin về `note` của người
+  khác, đảm bảo thông tin riêng tư của `note`
+- `show_ui`: `true`, bởi vì đặt `public: false`, do đó, `note` không còn hiển thị
+  ở giao diện trang `admin` nữa, ta thêm tuỳ chọn này vào để hiển thị `note` lên trang
+  `admin`.
+
+```php
+  register_post_type('note', [
+      'show_in_rest' => true,
+      'supports' => ['title', 'editor'],
+      'public' => false,
+      'show_ui' => true,
+      'labels' => [
+          'name' => 'Notes',
+          'add_new_item' => 'Add New Note',
+          'edit_item' => 'Edit Note',
+          'all_items' => 'All Notes',
+          'singular_name' => 'Note'
+      ],
+      'menu_icon' => 'dashicons-welcome-write-blog'
+  ]);
+```
+
+#### Hiển thị danh sách `note` lên màn hình trang `My Notes`
+
+Ở trang `My Notes`, ta dùng `custom query` để `fetch` danh sách `note` trong
+CSDL.
+
+Trong trường hợp này, ta chỉ lấy về danh sách các `note` thuộc về người
+dùng hiện tại đang đăng nhập vào hệ thống.
+
+```php
+    $userNotes = new WP_Query([
+        'post_type' => 'note',
+        'posts_per_page' => -1,
+        'author' => get_current_user_id()
+    ]);
+```
+
+Sau đó, ta có thể lấy `note` từ `custom query` này và hiển thị lên màn hình.
+
+```php
+  <?php while ($userNotes->have_posts()) : ?>
+      <?php $userNotes->the_post(); ?>
+
+      <?php
+      $title = esc_attr(get_the_title());
+      $content = esc_attr(wp_strip_all_tags(get_the_content()));
+      ?>
+
+      <li>
+          <input class="note-title-field" type="text" value="<?php echo $title; ?>">
+          <span class="edit-note"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</span>
+          <span class="delete-note"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</span>
+          <textarea class="note-body-field" name="" id="" cols="30" rows="10"><?php echo $content; ?></textarea>
+      </li>
+
+  <?php endwhile; ?>
+
+  <?php wp_reset_postdata(); ?>
+```
