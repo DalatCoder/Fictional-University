@@ -2150,3 +2150,79 @@ Ta dựa vào đó để lấy `ID`, `title` và `content` để hiển thị l�
     });
   }
 ```
+
+### 19.2. My Notes: Permissions and Security
+
+Tính tới thời điểm hiện tại, chỉ có duy nhất `admin` có quyền tạo `note` và
+quản lý `note`. Tuy nhiên, chúng ta muốn tất cả các `subscriber` đều có thể tạo
+`note` và quản lý `note` của họ.
+
+Để làm được điều đó, trước hết cần cho phép chỉnh sửa quyền của `note`.
+
+Truy cập vào file `university-post-type.php`, tại đây, thêm 1 số dòng sau:
+
+```php
+    register_post_type('note', [
+        'capability_type' => 'note',
+        'map_meta_cap' => true,
+    ]);
+```
+
+Lúc này, truy cập vào trang `admin`
+
+- Đặt `full` quyền phần `note` cho `role` `administrator`
+- Với `subscriber`, ta chỉ giới hạn 1 số quyền nhất định:
+
+  - `publish_notes`: Tạo mới 1 `note`
+  - `edit_notes`: Chỉnh sửa `note` ở trạng thái `draft`
+  - `edit_published_notes`: Chỉnh sửa `note` ở trạng thái `publish`
+  - `delete_notes`: Xoá `note` ở trạng thái `draft`
+  - `delete_published_notes`: Xoá `note` ở trạng thái `publish`
+
+  Lúc này, `subscriber` có thể tạo mới `note` của chính họ
+
+#### Vấn đề quyền riêng tư
+
+Khi truy cập vào `REST API` mặc định của `WordPress`, toàn bộ dữ liệu về `note`
+sẽ được hiển thị ra.
+
+Chỉ cần đặt thuộc tính của `note` thành `private`, lúc này khi lấy dữ liệu từ `API`,
+các `note` `private` sẽ không được hiển thị ra.
+
+- Cách 1: Chỉnh sửa thuộc tính `status` ở phía `client`.
+  Chỉ cần làm như này, tất cả `note` mới tạo ra sẽ mặc định ở trạng thái `private`.
+  Tuy nhiên, code ở `client` dễ thay đổi, ta không thể tin tưởng `100%` được.
+
+```js
+const newNote = {
+  title: $('.new-note-title').val(),
+  content: $('.new-note-body').val(),
+  status: 'private',
+};
+```
+
+- Cách 2: Thực hiện ở phía `backend`
+  Ta sẽ dùng 1 bộ lọc, tiến hành lọc dữ liệu trước khi dữ liệu được đưa vào CSDL. Tại
+  phễu lọc này, chúng ta sẽ chỉnh sửa thuộc tính `status` và gán giá trị `private`
+
+  - Mở file `functions.php`
+  - Thêm `filter`:
+
+    - Hook: `wp_insert_post_data`: `hook` trước khi dữ liệu được đưa vào `db`
+    - makeNotePrivate($data): Hàm thực thi, `$data`là dữ liệu đang chuẩn bị được đưa vào`db`
+
+      ```php
+          add_filter('wp_insert_post_data', 'makeNotePrivate');
+
+          function makeNotePrivate($data)
+          {
+              $postType = $data['post_type'];
+              $postStatus = $data['post_status'];
+
+              if ($postType == 'note' && $postStatus != 'trash') {
+                  $data['post_status'] = 'private';
+              }
+
+              return $data;
+          }
+      ```

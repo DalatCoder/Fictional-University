@@ -24,7 +24,7 @@ class MyNotes {
     const newNote = {
       title: $(".new-note-title").val(),
       content: $(".new-note-body").val(),
-      status: "publish",
+      status: "public",
     };
 
     $.ajax({
