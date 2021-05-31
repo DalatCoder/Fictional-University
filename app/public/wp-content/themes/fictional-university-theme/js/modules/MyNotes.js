@@ -12,6 +12,7 @@ class MyNotes {
   events() {
     $(".delete-note").on("click", this.deleteNote.bind(this));
     $(".edit-note").on("click", this.editNote.bind(this));
+    $(".update-note").on("click", this.updateNote.bind(this));
   }
 
   // Methods will go here
@@ -48,6 +49,36 @@ class MyNotes {
       .removeClass("note-active-field");
 
     thisNote.find(".update-note").removeClass("update-note--visible");
+  }
+
+  updateNote(event) {
+    const thisNote = $(event.target).parents("li");
+
+    const noteID = thisNote.data("id");
+    const updateAPIUrl = `${this.rootURL}/wp-json/wp/v2/note/${noteID}`;
+    const nonceCode = this.nonceCode || "";
+
+    const updatedPost = {
+      title: thisNote.find(".note-title-field").val(),
+      content: thisNote.find(".note-body-field").val(),
+    };
+
+    $.ajax({
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader("X-WP-Nonce", nonceCode);
+      },
+      url: updateAPIUrl,
+      data: updatedPost,
+      type: "POST",
+      success: (response) => {
+        this.makeNoteReadonly(thisNote);
+        console.log(response);
+      },
+      error: (response) => {
+        console.log("sorry");
+        console.log(response);
+      },
+    });
   }
 
   deleteNote(event) {
