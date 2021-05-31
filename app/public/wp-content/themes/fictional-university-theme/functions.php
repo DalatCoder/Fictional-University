@@ -206,14 +206,21 @@ function ourLoginTitle()
 }
 
 // Force note posts to be private
-add_filter('wp_insert_post_data', 'makeNotePrivate');
+add_filter('wp_insert_post_data', 'makeNotePrivate', 10, 2);
 
-function makeNotePrivate($data)
+function makeNotePrivate($data, $postarr)
 {
     $postType = $data['post_type'];
     $postStatus = $data['post_status'];
+    $limitNotePerUser = 10;
+    $isPostExist = isset($postarr['ID']);
 
     if ($postType == 'note') {
+        // Limit post type
+        if (count_user_posts(get_current_user_id(), $postType) >= $limitNotePerUser && !$isPostExist) {
+            die('You have reached your note limit.');
+        }
+
         $data['post_content'] = sanitize_textarea_field($data['post_content']);
         $data['post_title'] = sanitize_text_field($data['post_title']);
     }

@@ -2227,10 +2227,10 @@ const newNote = {
           }
       ```
 
-#### Vấn đề `private: ` xuất hiện trước title của mỗi `note`
+#### Vấn đề `private:` xuất hiện trước title của mỗi `note`
 
 Sau khi mặc định `status` của `note` về `private`, lúc này, khi mỗi lần vào
-trang `my-notes`. Trước mỗi `note` đều có dòng chữ `Private: `. Ta sẽ tìm cách
+trang `my-notes`. Trước mỗi `note` đều có dòng chữ `Private:`. Ta sẽ tìm cách
 để bỏ dòng chữ này.
 
 ```php
@@ -2272,4 +2272,60 @@ Mở file `functions.php`, tại `hook` `wp_insert_post_data`, thêm đoạn cod
 
         return $data;
     }
+```
+
+### 19.3. Post limit for each user
+
+Phòng tránh việc `user` `spam` `note`, điều này làm `server` trở nên chậm hơn
+do phải truy vấn nhiều.
+
+Trong trường hợp này, ta muốn mỗi `user` chỉ có thể tạo tối đa 10 `note`.
+
+Tại `filter` `hook` `wp_insert_post_data`. Nếu `user` tạo 1 `note` mới,
+ta đếm số lượng `note` có sẵn. Nếu vượt quá `10`. Ta dùng hàm `die` để dừng
+`request`, ta có thể truyền thêm 1 chuỗi vào để giải thích lý do.
+
+- Làm sao biết được đây là `note` mới ?
+  - Nếu `note` đã tồn tại, `ID` sẽ tồn tại
+  - `note` mới, `ID` không tồn tại
+
+Để lấy được `ID`, ta cần hàm xử lý nhận vào tham số thứ 2 là `$postarr`,
+để có thể nhận được tham số thứ 2, ta cần chỉnh sửa 1 chút như sau:
+
+```php
+  add_filter('wp_insert_post_data', 'makeNotePrivate', 10, 2);
+```
+
+Trong đó,
+
+- `10`: Số thứ tự, trong trường hợp có nhiều `filter` `hook` cùng loại,
+  số thứ tự nhỏ hơn sẽ chạy trước, lớn hơn sẽ chạy sau.
+- `2`: Yêu cầu truyền vào `callback` 2 tham số thay vì mặc định 1 tham số.
+
+Lúc này, code xử lý sẽ trông như sau:
+
+```php
+  function makeNotePrivate($data, $postarr)
+  {
+      $postType = $data['post_type'];
+      $postStatus = $data['post_status'];
+      $limitNotePerUser = 10;
+      $isPostExist = isset($postarr['ID']);
+
+      if ($postType == 'note') {
+          // Limit post type
+          if (count_user_posts(get_current_user_id(), $postType) >= $limitNotePerUser && !$isPostExist) {
+              die('You have reached your note limit.');
+          }
+
+          $data['post_content'] = sanitize_textarea_field($data['post_content']);
+          $data['post_title'] = sanitize_text_field($data['post_title']);
+      }
+
+      if ($postType == 'note' && $postStatus != 'trash') {
+          $data['post_status'] = 'private';
+      }
+
+      return $data;
+  }
 ```
