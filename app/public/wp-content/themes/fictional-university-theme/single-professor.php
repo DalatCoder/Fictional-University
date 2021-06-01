@@ -48,7 +48,7 @@
                 </div>
 
                 <div class="two-thirds">
-                    <span class="like-box" data-exists="<?php echo $existStatus; ?>">
+                    <span class="like-box" data-professor="<?php echo $professorID; ?>" data-exists="<?php echo $existStatus; ?>">
                         <i class="fa fa-heart-o" aria-hidden="true"></i>
                         <i class="fa fa-heart" aria-hidden="true"></i>
                         <span class="like-count"><?php echo $numberOfLike; ?></span>

@@ -22,9 +22,17 @@ function universityLikeRoute()
     ]);
 }
 
-function createLike()
+function createLike($data)
 {
-    return 'Create new like';
+    $professorID = sanitize_text_field($data['professorID']);
+
+    wp_insert_post([
+        'post_type' => 'like',
+        'post_status' => 'publish',
+        'meta_input' => [
+            'liked_professor_id' => $professorID
+        ]
+    ]);
 }
 
 function deleteLike()

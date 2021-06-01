@@ -14,16 +14,20 @@ class Like {
   ourClickDispatcher(event) {
     const currentLikeBox = $(event.target).closest(".like-box");
 
+    const professorID = currentLikeBox.data("professor");
     const likeExists = currentLikeBox.data("exists") == "yes";
 
-    if (likeExists) this.deleteLike();
-    else this.createLike();
+    if (likeExists) this.deleteLike(professorID);
+    else this.createLike(professorID);
   }
 
-  createLike() {
+  createLike(professorID) {
     $.ajax({
       url: this.apiURL,
       type: "POST",
+      data: {
+        professorID: professorID,
+      },
       success: (response) => {
         console.log(response);
       },
@@ -33,10 +37,13 @@ class Like {
     });
   }
 
-  deleteLike() {
+  deleteLike(professorID) {
     $.ajax({
       url: this.apiURL,
       type: "DELETE",
+      data: {
+        professorID: professorID,
+      },
       success: (response) => {
         console.log(response);
       },
