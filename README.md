@@ -2396,3 +2396,30 @@ Thuộc tính `found_posts` này sẽ trả về số lượng của tất cả,
 ```php
     $numberOfLike = $likeCountQuery->found_posts;
 ```
+
+### 20.4. Trạng thái nếu như `user` đã `like` 1 `professor`
+
+Nếu như `user` đã thích `professor` rồi thì hiển thị trái tim được phủ, thay vì tim rỗng.
+
+Tại đây, ta đặt trạng thái mặc định là `no`. Nếu như `user` đã đăng nhập hệ thống,
+ta tiến hành tạo truy vấn, tìm xem liệu `user` này đã like `professfor` hay chưa.
+
+```php
+    $existStatus = 'no';
+
+    if (is_user_logged_in()) {
+        $existQuery = new WP_Query([
+            'author' => get_current_user_id(),
+            'post_type' => 'like',
+            'meta_query' => [
+                'key' => 'liked_professor_id',
+                'compare' => '=',
+                'value' => get_the_ID()
+            ]
+        ]);
+
+        if ($existQuery->found_posts) {
+            $existStatus = 'yes';
+        }
+    }
+```
