@@ -6,27 +6,29 @@
     <?php pageBanner(); ?>
 
     <?php
-    // Like count
+    $professorID = get_the_ID();
 
     $likeCountQuery = new WP_Query([
         'post_type' => 'like',
         'meta_query' => [
             'key' => 'liked_professor_id',
             'compare' => '=',
-            'value' => get_the_ID()
+            'value' => $professorID
         ]
     ]);
+    $numberOfLike = $likeCountQuery->found_posts;
 
     $existStatus = 'no';
-
     if (is_user_logged_in()) {
         $existQuery = new WP_Query([
             'author' => get_current_user_id(),
             'post_type' => 'like',
             'meta_query' => [
-                'key' => 'liked_professor_id',
-                'compare' => '=',
-                'value' => get_the_ID()
+                [
+                    'key' => 'liked_professor_id',
+                    'compare' => '=',
+                    'value' => $professorID
+                ]
             ]
         ]);
 
@@ -35,7 +37,6 @@
         }
     }
 
-    $numberOfLike = $likeCountQuery->found_posts;
     ?>
 
     <div class="container container--narrow page-section">
