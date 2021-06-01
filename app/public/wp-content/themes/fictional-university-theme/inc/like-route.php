@@ -66,7 +66,25 @@ function createLike($data)
     ]);
 }
 
-function deleteLike()
+function deleteLike($data)
 {
-    return 'Delete a like';
+    if (!is_user_logged_in()) {
+        die('Only logged in user can delete a like.');
+    }
+
+    $likeID = sanitize_text_field($data['likeID']);
+
+    log_me($likeID);
+
+    $isLikeExists = get_post_type($likeID) == 'like';
+    if (!$isLikeExists) {
+        die('Invalid like ID');
+    }
+
+    $isThisLikeBelongToUser = get_current_user_id() == get_post_field('post_author', $likeID);
+    if (!$isThisLikeBelongToUser) {
+        die('You dont have permissions to perform this action.');
+    }
+
+    return wp_delete_post($likeID, true);
 }
