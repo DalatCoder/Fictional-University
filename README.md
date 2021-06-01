@@ -2423,3 +2423,5 @@ ta tiến hành tạo truy vấn, tìm xem liệu `user` này đã like `profess
         }
     }
 ```
+
+### 20.5. Custom REST API Endpoints for "Like" Action
