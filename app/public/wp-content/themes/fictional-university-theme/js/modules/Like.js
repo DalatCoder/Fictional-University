@@ -2,6 +2,7 @@ import $ from "jquery";
 
 class Like {
   constructor() {
+    this.apiURL = `${universityData.root_url}/wp-json/university/v1/manageLike`;
     this.events();
   }
 
@@ -19,9 +20,31 @@ class Like {
     else this.createLike();
   }
 
-  createLike() {}
+  createLike() {
+    $.ajax({
+      url: this.apiURL,
+      type: "POST",
+      success: (response) => {
+        console.log(response);
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+  }
 
-  deleteLike() {}
+  deleteLike() {
+    $.ajax({
+      url: this.apiURL,
+      type: "DELETE",
+      success: (response) => {
+        console.log(response);
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+  }
 }
 
 export default Like;

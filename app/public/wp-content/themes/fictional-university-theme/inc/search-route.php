@@ -1,7 +1,5 @@
 <?php
 
-require get_theme_file_path('/inc/debug-utils.php');
-
 add_action('rest_api_init', 'universityRegisterSearch');
 
 function universityRegisterSearch()
