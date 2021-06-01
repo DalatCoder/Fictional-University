@@ -2469,3 +2469,28 @@ Tiến hành tạo REST API mới, đoạn code trông như sau:
       return 'Delete a like';
   }
 ```
+
+### 20.5. Tạo 1 `post` mới thông qua `PHP`
+
+Ta có thể dùng `PHP` để tạo 1 `post` mới.
+
+Trong trường hợp này, khi người dùng nhấn thích 1 `professor`. Ta muốn tạo mới
+1 `like post` và gắn các thông tin liên quan vào `post` này. Cụ thể như sau:
+
+- `wp_insert_post`: Hàm tạo 1 `post` mới
+- `$data`: Mảng chứa `professorID`, được truyền lên bởi `JS`
+
+```php
+  function createLike($data)
+  {
+      $professorID = sanitize_text_field($data['professorID']);
+
+      wp_insert_post([
+          'post_type' => 'like',
+          'post_status' => 'publish',
+          'meta_input' => [
+              'liked_professor_id' => $professorID
+          ]
+      ]);
+  }
+```
