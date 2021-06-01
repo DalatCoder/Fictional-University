@@ -2494,3 +2494,96 @@ Trong trường hợp này, khi người dùng nhấn thích 1 `professor`. Ta m
       ]);
   }
 ```
+
+### 20.6. Implement Permissions & Logic / Restriction
+
+#### User cần đăng nhập để thích `professor`
+
+Ở phía `REST API`, ta định sử dụng hàm `is_logged_in_user()` để kiếm tra `user`
+có đăng nhập hay không. Tuy nhiên, như vậy là chưa đủ để chứng minh, chúng ta cần
+phải truyền thêm mã `Nonce` để chắc chắn rằng người dùng đăng nhập.
+
+Lúc này, đoạn code để thêm `like` như sau:
+
+```php
+  function createLike($data)
+  {
+      if (!is_user_logged_in()) {
+          die('Only logged in user can create a like.');
+      }
+
+      $professorID = sanitize_text_field($data['professorID']);
+
+      return wp_insert_post([
+          'post_type' => 'like',
+          'post_status' => 'publish',
+          'meta_input' => [
+              'liked_professor_id' => $professorID
+          ]
+      ]);
+  }
+```
+
+Code ở phía `client` sẽ trông như sau:
+
+```js
+  createLike(professorID) {
+    $.ajax({
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader("X-WP-Nonce", universityData.nonce);
+      },
+      url: this.apiURL,
+      type: "POST",
+      data: {
+        professorID: professorID,
+      },
+      success: (response) => {
+        console.log(response);
+      },
+      error: (response) => {
+        console.log(response);
+      },
+    });
+  }
+```
+
+#### Mỗi `user` chỉ có thể `like` `professor` 1 lần duy nhất
+
+Mỗi `user` chỉ có thể thực hiện `like` 1 `professor` 1 lần duy nhất.
+
+Để đảm bảo điều này, trước khi thêm 1 `like post type`, ta cần kiểm tra xem
+`user` đã like hay chưa:
+
+```php
+    $likeExists = false;
+
+    $existQuery = new WP_Query([
+        'author' => get_current_user_id(),
+        'post_type' => 'like',
+        'meta_query' => [
+            [
+                'key' => 'liked_professor_id',
+                'compare' => '=',
+                'value' => $professorID
+            ]
+        ]
+    ]);
+
+    if ($existQuery->found_posts) {
+        $likeExists = true;
+    }
+
+    if ($likeExists) {
+        die('Invalid professor ID');
+    }
+```
+
+#### Kiểm tra nếu như `professorID` không tồn tại
+
+```php
+    $isProfessorExists = get_post_type($professorID) == 'professor';
+
+    if (!$isProfessorExists) {
+        die('Invalid Professor ID');
+    }
+```

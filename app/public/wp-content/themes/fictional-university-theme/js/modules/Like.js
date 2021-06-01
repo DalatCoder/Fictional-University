@@ -23,6 +23,9 @@ class Like {
 
   createLike(professorID) {
     $.ajax({
+      beforeSend: (xhr) => {
+        xhr.setRequestHeader("X-WP-Nonce", universityData.nonce);
+      },
       url: this.apiURL,
       type: "POST",
       data: {
