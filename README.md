@@ -2329,3 +2329,38 @@ Lúc này, code xử lý sẽ trông như sau:
       return $data;
   }
 ```
+
+## 20. Like count for professors
+
+### 20.1. Let user `Like` a professor
+
+Tạo 1 `post type` mới để lưu trữ thông tin `like`
+
+Mỗi `user` chỉ có thể `like` `professor` 1 lần duy nhất. Bên cạnh đó, ta cũng cần
+đảm bảo rằng, `user` `like` `professor` chứ không phải các `post type` khác.
+
+Với những `logic` phức tạp thế này, thay vì dùng `show_in_rest` để sử dụng `REST API`
+mặc định. Ta sẽ chọn tự `custom` 1 `API Endpoint` riêng.
+
+Bên cạnh đó, ta cũng sẽ tự phân quyền chứ không dùng hàng mặc định của `WordPress`
+
+```php
+    register_post_type('like', [
+        'supports' => ['title'],
+        'public' => false,
+        'show_ui' => true,
+        'labels' => [
+            'name' => 'Likes',
+            'add_new_item' => 'Add New Like',
+            'edit_item' => 'Edit Like',
+            'all_items' => 'All Likes',
+            'singular_name' => 'Like'
+        ],
+        'menu_icon' => 'dashicons-heart'
+    ]);
+```
+
+### 20.2. Tạo mối quan hệ giữa `like` và `professor`
+
+Vào trang `admin`, tại `custom fields`, ta tiến hành tạo 1 `field group` mới. Và
+đặt tên là `Liked Professor ID`.
