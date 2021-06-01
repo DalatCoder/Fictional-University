@@ -2364,3 +2364,35 @@ Bên cạnh đó, ta cũng sẽ tự phân quyền chứ không dùng hàng mặ
 
 Vào trang `admin`, tại `custom fields`, ta tiến hành tạo 1 `field group` mới. Và
 đặt tên là `Liked Professor ID`.
+
+Tại đây, ta tạo 1 `field` mới, đặt tên `liked_profess_id` và chọn `type` là `number`.
+`Field` này dùng để lưu trữ `ID` của `Professor` mà `logged_in_user` đã thích.
+
+### 20.3. Hiển thị số lượt thích lên màn hình
+
+Tại file `single-professor.php`, ta tạo 1 `custom query` để lấy thông tin về số
+lượt `like` và hiển thị nó lên màn hình.
+
+Câu truy vấn này thực thi trên `like post type`, và chỉ lọc ra những `like post`
+có `liked_professor_id` bằng với `professor_id` hiện tại.
+
+```php
+    $likeCountQuery = new WP_Query([
+        'post_type' => 'like',
+        'meta_query' => [
+            'key' => 'liked_professor_id',
+            'compare' => '=',
+            'value' => get_the_ID()
+        ]
+    ]);
+```
+
+Ta có thể đếm được số lượt `like` của 1 `professor` thông qua thuộc tính sau của
+`query`.
+
+Thuộc tính `found_posts` này sẽ trả về số lượng của tất cả, không bị ảnh hưởng bởi
+`pagination`.
+
+```php
+    $numberOfLike = $likeCountQuery->found_posts;
+```
